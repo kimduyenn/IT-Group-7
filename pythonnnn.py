@@ -1,6 +1,10 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-athlete_events = pd.read_csv(r'D:\athlete_events.csv')
+import geopandas as gpd
+import seaborn as sns
+from matplotlib.colors import LinearSegmentedColormap
+
+athlete_events = pd.read_csv('athlete_events.csv')
 
 selected_sports = ["Athletics", "Badminton", "Boxing", "Cycling", "Gymnastics", "Swimming"]
 my_data = athlete_events[(athlete_events['Year'] == 2016) & (athlete_events['Sport'].isin(selected_sports))]
@@ -16,9 +20,9 @@ plt.show()
 
 
 
-import pandas as pd
-import matplotlib.pyplot as plt
-athlete_events = pd.read_csv(r'D:\athlete_events.csv')
+
+############# Plot 2
+
 
 Year2014 = athlete_events[athlete_events['Year'] == 2014]
 
@@ -56,9 +60,7 @@ plt.show()
 
 
 
-import pandas as pd
-import matplotlib.pyplot as plt
-athlete_events = pd.read_csv(r'D:\athlete_events.csv')
+
 filtered_data = athlete_events[(athlete_events['Year'] >= 1990) & (athlete_events['Year'] <= 2016)]
 filtered_data = filtered_data.dropna(subset=['Sex'])
 yearly_gender_counts = filtered_data.groupby(['Year', 'Sex']).size().reset_index(name='count')
@@ -91,9 +93,7 @@ plt.show()
 
 
 
-import pandas as pd
-import matplotlib.pyplot as plt
-athlete_events = pd.read_csv(r'D:\athlete_events.csv')
+
 b_data = athlete_events[athlete_events['Sport'].isin(["Boxing", "Football", "Judo", "Swimming", "Taekwondo"])]
 
 athlete_counts = b_data['Sport'].value_counts().reset_index()
@@ -111,11 +111,6 @@ plt.show()
 
 
 
-
-
-import pandas as pd
-import matplotlib.pyplot as plt
-athlete_events = pd.read_csv(r'D:\athlete_events.csv')
 filtered_dat = athlete_events[(athlete_events['Season'] == "Summer") & (athlete_events['Year'] >= 1990) & (athlete_events['Year'] <= 2016)]
 filtered_dat = filtered_dat[['Weight', 'Sex']].dropna()
 filtered_dat['Weight'] = pd.to_numeric(filtered_dat['Weight'])
@@ -141,9 +136,6 @@ plt.show()
 
 
 
-import pandas as pd
-import matplotlib.pyplot as plt
-athlete_events = pd.read_csv(r'D:\athlete_events.csv')
 filtered_dat = athlete_events[athlete_events['Year'] >= 1990]
 filtered_dat = filtered_dat[['Year', 'Season', 'Sport']].drop_duplicates()
 sports_count = filtered_dat.groupby(['Year', 'Season']).size().reset_index(name='count')
@@ -176,9 +168,6 @@ plt.show()
 
 
 
-import pandas as pd
-import matplotlib.pyplot as plt
-athlete_events = pd.read_csv(r'D:\athlete_events.csv')
 year2002 = athlete_events[athlete_events['Year'] == 2002]
 
 year2002['Age'] = pd.to_numeric(year2002['Age'], errors='coerce')
@@ -211,10 +200,6 @@ plt.show()
 
 
 
-
-import pandas as pd
-import matplotlib.pyplot as plt
-pd.read_csv(r'D:\athlete_events.csv')
 filtered_dat = athlete_events[(athlete_events['Year'] >= 1990) & (athlete_events['Year'] <= 2016)]
 
 summary_dat = filtered_dat.groupby(['Year', 'Season']).size().reset_index(name='total_athletes')
@@ -243,10 +228,6 @@ plt.show()
 
 
 
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-athlete_events = pd.read_csv(r'D:\athlete_events.csv')
 
 selected_sports = ["Basketball", "Gymnastics", "Swimming", "Athletics", "Boxing", "Wrestling"]
 sport_age = athlete_events[(athlete_events['Year'] >= 1960) & (athlete_events['Year'] <= 2000) & athlete_events['Sport'].isin(selected_sports)]
@@ -281,10 +262,8 @@ plt.show()
 
 
 
-import geopandas as gpd
-import matplotlib.pyplot as plt
-from matplotlib.colors import LinearSegmentedColormap
-athlete_events = pd.read_csv(r'D:\athlete_events.csv')
+
+
 east_asian_countries = ["China", "Japan", "South Korea", "North Korea", "Taiwan", "Hong Kong", "Mongolia", "Macau", 
             "Vietnam", "Laos", "Cambodia", "Thailand", "Myanmar", "Malaysia", "Singapore", "Brunei", 
             "Philippines", "Indonesia", "Timor-Leste"]
