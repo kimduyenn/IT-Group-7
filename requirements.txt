@@ -1,5 +1,4 @@
 pandas
-matplotlib.pyplot
+matplotlib
 geopandas
 seaborn
-matplotlib.colors 
