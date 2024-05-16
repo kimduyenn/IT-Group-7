@@ -4,7 +4,7 @@ import geopandas as gpd
 import seaborn as sns
 from matplotlib.colors import LinearSegmentedColormap
 
-athlete_events = pd.read_excel('Book1.xlsx')
+athlete_events = pd.read_csv('Book1.csv')
 
 selected_sports = ["Athletics", "Badminton", "Boxing", "Cycling", "Gymnastics", "Swimming"]
 my_data = athlete_events[(athlete_events['Year'] == 2016) & (athlete_events['Sport'].isin(selected_sports))]
