@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-athlete_events = pd.read_excel(r'D:\Athlete_events.xlsx')
+athlete_events = pd.read_excel(r 'D:/Athlete_events.xlsx')
 
 selected_sports = ["Athletics", "Badminton", "Boxing", "Cycling", "Gymnastics", "Swimming"]
 my_data = athlete_events[(athlete_events['Year'] == 2016) & (athlete_events['Sport'].isin(selected_sports))]
