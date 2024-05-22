@@ -1,15 +1,14 @@
 import streamlit as st
 import pandas as pd
 
-
-
-
-# Title
-st.title('My First Streamlit App')
-
-# Load Excel file
+# Read the Excel file
+file_path = r"C:\Users\admin\OneDrive\文档\GitHub\Python\Athlete_events.xlsx"
 try:
-    athlete_events = pd.read_excel('Athlete_events.xlsx')
-    st.write(athlete_events.head())
-except FileNotFoundError:
-    st.error("File not found. Please make sure the file 'Athlete_events.xlsx' exists in the same directory as this script.")
+    athlete_events = pd.read_excel(file_path)
+except FileNotFoundError as e:
+    st.error(f"File not found error: {e}")
+except Exception as e:
+    st.error(f"An error occurred: {e}")
+
+# Display the data
+st.write(athlete_events)
