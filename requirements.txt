@@ -5,4 +5,3 @@ geopandas
 seaborn
 matplotlib.colors 
 cartopy
-cartopy.feature
