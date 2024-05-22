@@ -2,6 +2,7 @@ import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
 import streamlit as st
+import openpyxl
 
 
 # Define the URL of the Excel file on GitHub
