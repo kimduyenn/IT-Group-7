@@ -25,7 +25,6 @@ except FileNotFoundError as e:
     print(f"File not found error: {e}")
 except Exception as e:
     print(f"An error occurred: {e}")
-pip install streamlit
 import pandas as pd
 import matplotlib.pyplot as plt
 
