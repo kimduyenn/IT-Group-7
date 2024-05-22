@@ -1,0 +1,8 @@
+pandas
+matplotlib
+numpy
+geopandas
+seaborn
+matplotlib.colors 
+cartopy.crs
+cartopy.feature
