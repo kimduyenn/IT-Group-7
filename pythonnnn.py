@@ -1,20 +1,5 @@
 import pandas as pd
-import matplotlib.pyplot as plt
-import streamlit as st
-import pandas as pd
 pip install openpyxl
-
-# Define the URL of the Excel file on GitHub
-file_url = "https://github.com/kimduyenn/Python/raw/main/Athlete_events.xlsx"
-
-# Read the Excel file
-try:
-    athlete_events = pd.read_excel(file_url)
-except Exception as e:
-    st.error(f"An error occurred while reading the Excel file: {e}")
-
-# Display the data
-st.write(athlete_events)
 
 # Specify the file path
 file_path = r"C:\Users\admin\OneDrive\文档\GitHub\Python\Athlete_events.xlsx"
@@ -27,9 +12,11 @@ except FileNotFoundError as e:
     print(f"File not found error: {e}")
 except Exception as e:
     print(f"An error occurred: {e}")
+pip install streamlit
+import pandas as pd
+import matplotlib.pyplot as plt
 
-athlete_events = pd.read_excel(r'C:\Users\admin\OneDrive\文档\GitHub\Python\Athlete_events.xlsx')
-
+athlete_events = pd.read_excel(r"C:\Users\admin\OneDrive\文档\GitHub\Python\Athlete_events.xlsx")
 
 selected_sports = ["Athletics", "Badminton", "Boxing", "Cycling", "Gymnastics", "Swimming"]
 my_data = athlete_events[(athlete_events['Year'] == 2016) & (athlete_events['Sport'].isin(selected_sports))]
@@ -42,6 +29,7 @@ plt.figure(figsize=(8, 8))
 plt.pie(sport_counts, labels=sport_counts.index, autopct='%1.1f%%', startangle=140, explode=explode)
 plt.axis('equal') 
 plt.show()
+
 
 # PLOT 2
 Year2014 = athlete_events[athlete_events['Year'] == 2014]
