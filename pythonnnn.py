@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import streamlit as st
 import pandas as pd
+pip install openpyxl
 
 # Define the URL of the Excel file on GitHub
 file_url = "https://github.com/kimduyenn/Python/raw/main/Athlete_events.xlsx"
