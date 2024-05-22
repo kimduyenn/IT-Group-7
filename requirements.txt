@@ -4,5 +4,5 @@ numpy
 geopandas
 seaborn
 matplotlib.colors 
-cartopy.crs
+cartopy
 cartopy.feature
