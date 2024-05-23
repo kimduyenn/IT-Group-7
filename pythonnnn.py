@@ -1,7 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
-athlete_events = pd.read_excel(r'D:\athlete_events.csv')
+athlete_events = pd.read_excel(r'D:\Athlete_events.xlsx')
 
 
 # PLOT 1
