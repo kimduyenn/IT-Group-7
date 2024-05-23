@@ -196,7 +196,7 @@ else:
         plt.tight_layout()
         plt.show()
 
- # PLOT 9
+# PLOT 9
 import seaborn as sns
 
 selected_sports = ["Basketball", "Gymnastics", "Swimming", "Athletics", "Boxing", "Wrestling"]
