@@ -4,18 +4,6 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import openpyxl
 
-
-# Replace 'file_path' with the actual file path
-file_path = r"C:\Users\admin\OneDrive\文档\GitHub\Python\Athlete_events.xlsx"
-
-# Read the Excel file into a pandas DataFrame
-athlete_events = pd.read_excel(file_path)
-
-# Now you can work with the DataFrame 'athlete_events'
-# For example, you can print the first few rows
-print(athlete_events.head())
-
-
 # Define the URL of the Excel file on GitHub
 file_url = "https://github.com/kimduyenn/Python/raw/main/Athlete_events.xlsx"
 
@@ -28,9 +16,10 @@ except Exception as e:
 # Display the data
 st.write(athlete_events)
 
-athlete_events = pd.read_excel(r"C:\Users\admin\OneDrive\文档\GitHub\Python\Athlete_events.xlsx"
-)
+athlete_events = pd.read_excel(r"C:\Users\admin\OneDrive\文档\GitHub\Python\Athlete_events.xlsx")
 
+
+# PLOT 1
 selected_sports = ["Athletics", "Badminton", "Boxing", "Cycling", "Gymnastics", "Swimming"]
 my_data = athlete_events[(athlete_events['Year'] == 2016) & (athlete_events['Sport'].isin(selected_sports))]
 
