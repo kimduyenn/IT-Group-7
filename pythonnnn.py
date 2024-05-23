@@ -223,9 +223,7 @@ density=False)
         east_asian_countries = [
             "China", "Japan", "South Korea", "North Korea", "Taiwan", "Hong Kong", "Mongolia", "Macau", "Vietnam", "Laos", "Cambodia", "Thailand", "Myanmar", "Malaysia", "Singapore", "Brunei", "Philippines", "Indonesia", "Timor-Leste"]
 
-        world_map = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
-
-       east_asian_map = world_map[world_map['name'].isin(east_asian_countries)]
+east_asian_map = world_map[world_map['name'].isin(east_asian_countries)]
 
 athlete_counts = athlete_events[
     (athlete_events['Team'].isin(east_asian_countries)) &(athlete_events['Year'].between(1990, 2016))].groupby('Team')['ID'].nunique().reset_index(name='athlete_count')
@@ -258,4 +256,3 @@ plt.show()
 
 except Exception as e:
     st.error(f"An error occurred: {e}")
-
