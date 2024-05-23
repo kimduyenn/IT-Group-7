@@ -8,7 +8,7 @@ from matplotlib.colors import LinearSegmentedColormap
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 
-athlete_events = pd.read_excel(r'D:\Athlete_events.xlsx')
+athlete_events = pd.read_excel('Athlete_events.xlsx')
 
 # PLOT 1
 
