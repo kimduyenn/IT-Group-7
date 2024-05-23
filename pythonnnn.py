@@ -219,40 +219,25 @@ density=False)
         plt.tight_layout()
         plt.show()
 
-        # Plot 10
-        east_asian_countries = [
-            "China", "Japan", "South Korea", "North Korea", "Taiwan", "Hong Kong", "Mongolia", "Macau", "Vietnam", "Laos", "Cambodia", "Thailand", "Myanmar", "Malaysia", "Singapore", "Brunei", "Philippines", "Indonesia", "Timor-Leste"]
+# Plot 10
+east_asian_countries = [
+    "China", "Japan", "South Korea", "North Korea", "Taiwan", "Hong Kong", "Mongolia", "Macau", "Vietnam", "Laos", "Cambodia", "Thailand", "Myanmar", "Malaysia", "Singapore", "Brunei", "Philippines", "Indonesia", "Timor-Leste"]
 
-east_asian_map = world_map[world_map['name'].isin(east_asian_countries)]
+world_map = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
 
 athlete_counts = athlete_events[
-    (athlete_events['Team'].isin(east_asian_countries)) &(athlete_events['Year'].between(1990, 2016))].groupby('Team')['ID'].nunique().reset_index(name='athlete_count')
+    (athlete_events['Team'].isin(east_asian_countries)) & (athlete_events['Year'].between(1990, 2016))].groupby('Team')['ID'].nunique().reset_index(name='athlete_count')
 
-east_asian_map_with_athletes = east_asian_map.merge(athlete_counts, left_on='name', right_on='Team', how='left')
+east_asian_map_with_athletes = world_map[world_map['name'].isin(east_asian_countries)].merge(athlete_counts, left_on='name', right_on='Team', how='left')
 
 east_asian_map_with_athletes['athlete_count'] = east_asian_map_with_athletes['athlete_count'].fillna(0)
 
-fig, ax = plt.subplots(figsize=(10, 6), subplot_kw={'projection': ccrs.PlateCarree()})
-ax.add_feature(cfeature.COASTLINE)
-ax.add_feature(cfeature.BORDERS, linestyle=':')
-ax.add_feature(cfeature.LAND)
-ax.add_feature(cfeature.OCEAN)
-
-colors = ['#FFFFFF', '#00CCFF', '#0099FF', '#0066FF', '#0033CC', '#000099']
-cmap = LinearSegmentedColormap.from_list('custom', colors, N=2500)
-
+fig, ax = plt.subplots(figsize=(10, 6))
 east_asian_map_with_athletes.boundary.plot(ax=ax, linewidth=1, edgecolor='black')
-east_asian_map_with_athletes.plot(column='athlete_count', cmap=cmap, linewidth=0.8, ax=ax, edgecolor='0.8', legend=True)
-
+east_asian_map_with_athletes.plot(column='athlete_count', cmap='OrRd', linewidth=0.8, ax=ax, edgecolor='0.8', legend=True)
 for idx, row in east_asian_map_with_athletes.iterrows():
     if pd.notna(row['athlete_count']):
-        plt.text(row.geometry.centroid.x, row.geometry.centroid.y, row['name'], 
-                ha='center', fontsize=8, color='red', transform=ccrs.PlateCarree())
-
+        plt.text(row.geometry.centroid.x, row.geometry.centroid.y, row['name'], ha='center', fontsize=8, color='red')
 ax.set_title('Number of Athletes in East Asian Countries (1990-2016)', fontsize=14)
-
 plt.tight_layout()
 plt.show()
-
-except Exception as e:
-    st.error(f"An error occurred: {e}")
