@@ -219,7 +219,6 @@ density=False)
         plt.tight_layout()
         plt.show()
 
-# Plot 9
 try:
     # Plot 10
     east_asian_countries = [
