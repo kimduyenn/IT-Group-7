@@ -4,8 +4,11 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import openpyxl
 
-athlete_events = pd.read_excel(r"C:\Users\admin\OneDrive\文档\GitHub\Python\Athlete_events.xlsx")
-
+# File uploader
+uploaded_file = st.file_uploader("Choose an Excel file", type=["xlsx"])
+if uploaded_file is not None:
+    athlete_events = pd.read_excel(uploaded_file)
+ 
 # PLOT 1
 selected_sports = ["Athletics", "Badminton", "Boxing", "Cycling", "Gymnastics", "Swimming"]
 my_data = athlete_events[(athlete_events['Year'] == 2016) & (athlete_events['Sport'].isin(selected_sports))]
