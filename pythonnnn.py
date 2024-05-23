@@ -21,7 +21,6 @@ plt.figure(figsize=(8, 8))
 plt.pie(sport_counts, labels=sport_counts.index, autopct='%1.1f%%', startangle=140, explode=explode)
 plt.axis('equal') 
 plt.show()
-st.pyplot(fig)
 
 # PLOT 2
 Year2014 = athlete_events[athlete_events['Year'] == 2014]
@@ -52,7 +51,7 @@ plt.xlabel("Athletes")
 plt.ylabel("Countries")
 
 plt.show()
-st.pyplot(fig)
+
 # PLOT 3
 filtered_data = athlete_events[(athlete_events['Year'] >= 1990) & (athlete_events['Year'] <= 2016)]
 filtered_data = filtered_data.dropna(subset=['Sex'])
@@ -83,7 +82,7 @@ plt.gca().spines['right'].set_visible(False)
 plt.xticks(yearly_gender_counts.index)
 plt.tight_layout()
 plt.show()
-st.pyplot(fig)
+
 
 
 # PLOT 4
@@ -97,7 +96,7 @@ plt.gca().add_patch(plt.Circle((0, 0), 0.5, color='white'))
 plt.title('The number of athletes participating in the Olympic during 120 Years')
 plt.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 plt.show()
-st.pyplot(fig)
+
 
 
 # PLOT 5
@@ -116,7 +115,7 @@ axs[1].legend()
 axs[1].grid(True, linestyle='--', alpha=0.7)
 plt.tight_layout()
 plt.show()
-st.pyplot(fig)
+
 
 
 # PLOT 6
@@ -162,7 +161,7 @@ for i, winter_count in enumerate(winter_counts):
 
 plt.tight_layout()
 plt.show()
-st.pyplot(fig)
+
 
 # PLOT 7
 year2002 = athlete_events[athlete_events['Year'] == 2002]
@@ -186,7 +185,7 @@ plt.legend(title='Sex')
 plt.grid(True, linestyle='--', alpha=0.3)
 plt.tight_layout()
 plt.show()
-st.pyplot(fig)
+
 
 # PLOT 8
 filtered_dat = athlete_events[(athlete_events['Year'] >= 1990) & (athlete_events['Year'] <= 2016)]
@@ -209,7 +208,7 @@ plt.xticks(range(1990, 2017, 2), fontsize=12)
 plt.yticks(fontsize=12)
 plt.tight_layout()
 plt.show()
-st.pyplot(fig)
+
 
 # PLOT 9 
 import seaborn as sns
@@ -233,7 +232,7 @@ plt.title('Distribution of Age by Sport (1960-2000)', fontsize=16)
 plt.grid(axis='y', linestyle='--', alpha=0.7)
 plt.tight_layout()
 plt.show()
-st.pyplot(fig)
+
 
 # PLOT 10 
 import pandas as pd
@@ -278,4 +277,4 @@ ax.set_title('Number of Athletes in East Asian Countries (1990-2016)', fontsize=
 
 plt.tight_layout()
 plt.show()
-st.pyplot(fig)
+
