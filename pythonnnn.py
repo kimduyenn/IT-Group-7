@@ -3,18 +3,12 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import streamlit as st
 import openpyxl
-
-# Define the URL of the Excel file on GitHub
-file_url = "https://github.com/kimduyenn/Python/raw/main/Athlete_events.xlsx"
-
-# Read the Excel file
-try:
-    athlete_events = pd.read_excel(file_url)
-except Exception as e:
-    st.error(f"An error occurred while reading the Excel file: {e}")
-
-# Display the data
-st.write(athlete_events)
+import pandas as pd
+import streamlit as st
+import matplotlib.pyplot as plt
+import streamlit as st
+import openpyxl
+athlete_events = pd.read_excel(r"C:\Users\admin\OneDrive\文档\GitHub\Python\Athlete_events.xlsx")
 
 # PLOT 1
 selected_sports = ["Athletics", "Badminton", "Boxing", "Cycling", "Gymnastics", "Swimming"]
