@@ -42,19 +42,23 @@ else:
         athlete_events = pd.read_excel(file_path)
         
 # PLOT 1
-selected_sports = ["Athletics", "Badminton", "Boxing", "Cycling", "Gymnastics", "Swimming"]
 
-my_data = athlete_events[(athlete_events['Year'] == 2016) & (athlete_events['Sport'].isin(selected_sports))]
+ selected_sports = ["Athletics", "Badminton", "Boxing", "Cycling", "Gymnastics", "Swimming"]
 
-sport_counts = my_data['Sport'].value_counts(normalize=True) * 100
+    # Filter the data for the selected year and sports
+    my_data = athlete_events[(athlete_events['Year'] == 2016) & (athlete_events['Sport'].isin(selected_sports))]
 
-explode = [0.02] * len(sport_counts) 
+    # Count the occurrences of each sport
+    sport_counts = my_data['Sport'].value_counts(normalize=True) * 100
 
-plt.figure(figsize=(8, 8))
-plt.pie(sport_counts, labels=sport_counts.index, autopct='%1.1f%%', startangle=140, explode=explode)
-plt.axis('equal') 
-plt.show()
+    # Explode the slices slightly
+    explode = [0.02] * len(sport_counts)
 
+    # Create the pie chart
+    plt.figure(figsize=(8, 8))
+    plt.pie(sport_counts, labels=sport_counts.index, autopct='%1.1f%%', startangle=140, explode=explode)
+    plt.axis('equal')
+    plt.show()
 
 # PLOT 2
 Year2014 = athlete_events[athlete_events['Year'] == 2014]
