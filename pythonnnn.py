@@ -1,8 +1,15 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+ import openpyxl
+    import os
+    import numpy as np
+    import seaborn as sns
+    import geopandas as gpd
+    from matplotlib.colors import LinearSegmentedColormap
+    import cartopy.crs as ccrs
+    import cartopy.feature as cfeature
 
 athlete_events = pd.read_excel(r'D:\Athlete_events.xlsx')
-
 
 # PLOT 1
 
