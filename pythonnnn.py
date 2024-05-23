@@ -202,9 +202,7 @@ else:
         sport_age['Year'] = pd.to_numeric(sport_age['Year'])
         sport_age['Age'] = pd.to_numeric(sport_age['Age'], errors='coerce')
         sport_medians = sport_age.groupby('Sport')['Age'].median().sort_values().index
-        plt.figure(figsize=(12, 8))
-        sns.boxplot(data=sport_age, x='Sport', y='Age', order=sport_medians
-        plt.figure(figsize=(12, 8))
+                plt.figure(figsize=(12, 8))
         sns.boxplot(data=sport_age, x='Sport', y='Age', order=sport_medians, palette=sns.color_palette("Paired")) 
         plt.xticks(ha='center', fontsize=12)
         plt.yticks(fontsize=12)
@@ -215,7 +213,7 @@ else:
         plt.tight_layout()
         plt.show()
 
-# Plot 10
+        # Plot 10
         east_asian_countries = [
             "China", "Japan", "South Korea", "North Korea", "Taiwan", "Hong Kong", "Mongolia", "Macau", "Vietnam", "Laos", "Cambodia", "Thailand", "Myanmar", "Malaysia", "Singapore", "Brunei", "Philippines", "Indonesia", "Timor-Leste"]
 
