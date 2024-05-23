@@ -196,22 +196,27 @@ else:
         plt.tight_layout()
         plt.show()
 
- # Plot 9 
-        selected_sports = ["Basketball", "Gymnastics", "Swimming", "Athletics"]
-        sport_age = athlete_events[(athlete_events['Year'] >= 1960) & (athlete_events['Year'] <= 2000) & athlete_events['Sport'].isin(selected_sports)]
-        sport_age['Year'] = pd.to_numeric(sport_age['Year'])
-        sport_age['Age'] = pd.to_numeric(sport_age['Age'], errors='coerce')
-        sport_medians = sport_age.groupby('Sport')['Age'].median().sort_values().index
-                plt.figure(figsize=(12, 8))
-        sns.boxplot(data=sport_age, x='Sport', y='Age', order=sport_medians, palette=sns.color_palette("Paired")) 
-        plt.xticks(ha='center', fontsize=12)
-        plt.yticks(fontsize=12)
-        plt.xlabel('Sport', fontsize=14)
-        plt.ylabel('Age', fontsize=14)
-        plt.title('Distribution of Age by Sport (1960-2000)', fontsize=16)
-        plt.grid(axis='y', linestyle='--', alpha=0.7)
-        plt.tight_layout()
-        plt.show()
+ # PLOT 9
+import seaborn as sns
+
+selected_sports = ["Basketball", "Gymnastics", "Swimming", "Athletics", "Boxing", "Wrestling"]
+sport_age = athlete_events[(athlete_events['Year'] >= 1960) & (athlete_events['Year'] <= 2000) & athlete_events['Sport'].isin(selected_sports)]
+
+sport_age['Year'] = pd.to_numeric(sport_age['Year'])
+sport_age['Age'] = pd.to_numeric(sport_age['Age'], errors='coerce')
+
+sport_medians = sport_age.groupby('Sport')['Age'].median().sort_values().index
+
+plt.figure(figsize=(12, 8))
+sns.boxplot(data=sport_age, x='Sport', y='Age', order=sport_medians, palette=sns.color_palette("Paired")) 
+plt.xticks(ha='center', fontsize=12)
+plt.yticks(fontsize=12)
+plt.xlabel('Sport', fontsize=14)
+plt.ylabel('Age', fontsize=14)
+plt.title('Distribution of Age by Sport (1960-2000)', fontsize=16)
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.tight_layout()
+plt.show()
 
         # Plot 10
         east_asian_countries = [
