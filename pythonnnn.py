@@ -55,6 +55,9 @@ fig, ax = plt.subplots(figsize=(8, 8))
 ax.pie(sport_counts, labels=sport_counts.index, autopct='%1.1f%%', startangle=140, explode=explode)
 ax.axis('equal')
 st.pyplot(fig)
+except Exception as e:
+    st.error(f"An error occurred: {e}")
+
         # Plot 2
 if 'athlete_events' in globals():
 Year2014 = athlete_events[athlete_events['Year'] == 2014]
