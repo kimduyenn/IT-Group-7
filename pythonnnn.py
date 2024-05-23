@@ -3,7 +3,7 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import streamlit as st
 import openpyxl
-
+from openpyxl import load_workbook
 # File uploader
 uploaded_file = st.file_uploader("Choose an Excel file", type=["xlsx"])
 if uploaded_file is not None:
