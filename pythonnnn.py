@@ -4,11 +4,33 @@ import matplotlib.pyplot as plt
 import streamlit as st
 import openpyxl
 from openpyxl import load_workbook
-# File uploader
-uploaded_file = st.file_uploader("Choose an Excel file", type=["xlsx"])
-if uploaded_file is not None:
-    athlete_events = pd.read_excel(uploaded_file)
- 
+
+# Đường dẫn tới file Excel gốc
+file_path = r"C:\Users\admin\OneDrive\文档\GitHub\Python\Athlete_events.xlsx"
+
+# Đọc file Excel gốc
+excel_data = pd.read_excel(file_path, sheet_name=None)
+
+# Tạo một file Excel mới để lưu dữ liệu tối ưu hóa
+writer = pd.ExcelWriter('optimized_Athlete_events.xlsx', engine='openpyxl')
+
+# Xử lý từng trang tính (sheet)
+for sheet_name, df in excel_data.items():
+    # Loại bỏ các cột hoặc hàng không cần thiết (ví dụ)
+    # df = df.drop(columns=['Column_to_remove'])
+    # df = df[df['Some_column'] != 'Some_value']
+
+    # Xóa định dạng không cần thiết
+    df.style = None
+
+    # Lưu dữ liệu đã được tối ưu hóa vào file mới
+    df.to_excel(writer, sheet_name=sheet_name, index=False)
+
+# Lưu file Excel mới
+writer.save()
+
+print("File đã được tối ưu hóa và lưu thành công!")
+
 # PLOT 1
 selected_sports = ["Athletics", "Badminton", "Boxing", "Cycling", "Gymnastics", "Swimming"]
 my_data = athlete_events[(athlete_events['Year'] == 2016) & (athlete_events['Sport'].isin(selected_sports))]
