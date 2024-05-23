@@ -10,12 +10,14 @@ try:
     from matplotlib.colors import LinearSegmentedColormap
     import cartopy.crs as ccrs
     import cartopy.feature as cfeature
+file_path = "https://github.com/kimduyenn/Python/raw/main/Athlete_events.xlsx"
 
     # Title of the app
     st.title('Athlete Events Optimization and Visualization')
 
     # Path to the original Excel file
     file_path = r"C:\Users\admin\OneDrive\文档\GitHub\Python\Athlete_events.xlsx"
+file_path = "https://github.com/kimduyenn/Python/raw/main/Athlete_events.xlsx"
 
     # Check if the file exists
     if not os.path.exists(file_path):
