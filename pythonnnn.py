@@ -103,7 +103,7 @@ try:
         plt.tight_layout()
         plt.show()
 
-# Plot 4
+        # Plot 4
         b_data = athlete_events[athlete_events['Sport'].isin(["Boxing", "Football", "Judo", "Swimming", "Taekwondo"])]
         athlete_counts = b_data['Sport'].value_counts().reset_index()
         athlete_counts.columns = ['Sport', 'count']
@@ -114,20 +114,22 @@ try:
         plt.legend(loc='center left', bbox_to_anchor=(1, 0.5))
         plt.show()
 
- # Plot 5 (continued)
-        axs[0].hist(filtered_dat[filtered_dat['Sex'] == 'M']['Weight'], bins=range(0, 300, 5), color="#1f77b4", edgecolor='white', alpha=1, label='Male', density=False)
+        # Plot 5
+        fig, axs = plt.subplots(2, 1, figsize=(12, 8))
+        axs[0].hist(filtered_data[filtered_data['Sex'] == 'M']['Weight'], bins=range(0, 300, 5), color="#1f77b4", edgecolor='white', alpha
+=1, label='Male', density=False)
         axs[0].set_xlabel('Weight (kg)')
         axs[0].set_ylabel('Number of Athletes')
         axs[0].legend()
         axs[0].grid(True, linestyle='--', alpha=0.7)
-        axs[1].hist(filtered_dat[filtered_dat['Sex'] == 'F']['Weight'], bins=range(0, 300, 5), color="#E54646", edgecolor='white', alpha=1, label='Female', density=False)
+        axs[1].hist(filtered_data[filtered_data['Sex'] == 'F']['Weight'], bins=range(0, 300, 5), color="#E54646", edgecolor='white', alpha=1, label='Female', density=False)
         axs[1].set_xlabel('Weight (kg)')
         axs[1].legend()
         axs[1].grid(True, linestyle='--', alpha=0.7)
         plt.tight_layout()
         plt.show()
 
- # Plot 6
+        # Plot 6
         filtered_dat = athlete_events[athlete_events['Year'] >= 1990]
         filtered_dat = filtered_dat[['Year', 'Season', 'Sport']].drop_duplicates()
         sports_count = filtered_dat.groupby(['Year', 'Season']).size().unstack(fill_value=0)
@@ -160,7 +162,7 @@ try:
         plt.tight_layout()
         plt.show()
 
- # Plot 7
+        # Plot 7
         year2002 = athlete_events[athlete_events['Year'] == 2002]
         year2002['Age'] = pd.to_numeric(year2002['Age'], errors='coerce')
         year2002_count = year2002.drop_duplicates(subset=['ID', 'Age', 'Sex'])
@@ -177,7 +179,7 @@ try:
         plt.tight_layout()
         plt.show()
 
-# Plot 8
+        # Plot 8
         filtered_dat = athlete_events[(athlete_events['Year'] >= 1990) & (athlete_events['Year'] <= 2016)]
         summary_dat = filtered_dat.groupby(['Year', 'Season']).size().reset_index(name='total_athletes')
         plt.figure(figsize=(10, 6))
@@ -196,29 +198,25 @@ try:
         plt.tight_layout()
         plt.show()
 
-# PLOT 9
-try:
-    selected_sports = ["Basketball", "Gymnastics", "Swimming", "Athletics", "Boxing", "Wrestling"]
-    sport_age = athlete_events[(athlete_events['Year'] >= 1960) & (athlete_events['Year'] <= 2000) & athlete_events['Sport'].isin(selected_sports)]
+        # Plot 9
+        selected_sports = ["Basketball", "Gymnastics", "Swimming", "Athletics", "Boxing", "Wrestling"]
+        sport_age = athlete_events[(athlete_events['Year'] >= 1960) & (athlete_events['Year'] <= 2000) & athlete_events['Sport'].isin(selected_sports)]
 
-    sport_age['Year'] = pd.to_numeric(sport_age['Year'])
-    sport_age['Age'] = pd.to_numeric(sport_age['Age'], errors='coerce')
+        sport_age['Year'] = pd.to_numeric(sport_age['Year'])
+        sport_age['Age'] = pd.to_numeric(sport_age['Age'], errors='coerce')
 
-    sport_medians = sport_age.groupby('Sport')['Age'].median().sort_values().index
+        sport_medians = sport_age.groupby('Sport')['Age'].median().sort_values().index
 
-    plt.figure(figsize=(12, 8))
-    sns.boxplot(data=sport_age, x='Sport', y='Age', order=sport_medians, palette=sns.color_palette("Paired")) 
-    plt.xticks(ha='center', fontsize=12)
-    plt.yticks(fontsize=12)
-    plt.xlabel('Sport', fontsize=14)
-    plt.ylabel('Age', fontsize=14)
-    plt.title('Distribution of Age by Sport (1960-2000)', fontsize=16)
-    plt.grid(axis='y', linestyle='--', alpha=0.7)
-    plt.tight_layout()
-    plt.show()
-
-except Exception as e:
-    st.error(f"An error occurred: {e}")
+        plt.figure(figsize=(12, 8))
+        sns.boxplot(data=sport_age, x='Sport', y='Age', order=sport_medians, palette=sns.color_palette("Paired")) 
+        plt.xticks(ha='center', fontsize=12)
+        plt.yticks(fontsize=12)
+        plt.xlabel('Sport', fontsize=14)
+        plt.ylabel('Age', fontsize=14)
+        plt.title('Distribution of Age by Sport (1960-2000)', fontsize=16)
+        plt.grid(axis='y', linestyle='--', alpha=0.7)
+        plt.tight_layout()
+        plt.show()
 
         # Plot 10
         east_asian_countries = [
@@ -257,5 +255,5 @@ except Exception as e:
         plt.tight_layout()
         plt.show()
 
-    except Exception as e:
-        st.error(f"An error occurred: {e}")
+except Exception as e:
+    st.error(f"An error occurred: {e}")
