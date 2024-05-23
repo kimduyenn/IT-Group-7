@@ -46,36 +46,35 @@ try:
 
         # Read the optimized data
         athlete_events = pd.read_excel('optimized_Athlete_events.xlsx')
-    # Plot 1
- selected_sports = ["Athletics", "Badminton", "Boxing", "Cycling", "Gymnastics", "Swimming"]
- my_data = athlete_events[(athlete_events['Year'] == 2016) & (athlete_events['Sport'].isin(selected_sports))]
+# Plot 1
+selected_sports = ["Athletics", "Badminton", "Boxing", "Cycling", "Gymnastics", "Swimming"]
+my_data = athlete_events[(athlete_events['Year'] == 2016) & (athlete_events['Sport'].isin(selected_sports))]
 sport_counts = my_data['Sport'].value_counts(normalize=True) * 100
 explode = [0.02] * len(sport_counts)
 fig, ax = plt.subplots(figsize=(8, 8))
 ax.pie(sport_counts, labels=sport_counts.index, autopct='%1.1f%%', startangle=140, explode=explode)
 ax.axis('equal')
 st.pyplot(fig)
-
         # Plot 2
 if 'athlete_events' in globals():
- Year2014 = athlete_events[athlete_events['Year'] == 2014]
- Teams = ["United States", "Russia", "Norway", "Germany", "Canada"]
- m_data = Year2014[Year2014['Team'].isin(Teams)]
+Year2014 = athlete_events[athlete_events['Year'] == 2014]
+Teams = ["United States", "Russia", "Norway", "Germany", "Canada"]
+m_data = Year2014[Year2014['Team'].isin(Teams)]
 m_data_unique = m_data.drop_duplicates(subset='Name', keep='first')
- team_counts = m_data_unique['Team'].value_counts().reset_index()
+team_counts = m_data_unique['Team'].value_counts().reset_index()
 team_counts.columns = ['Team', 'Count']
- team_counts = team_counts.sort_values(by='Count', ascending=False)
- unique_colors = ["#FF5733", "#FFBD33", "#33FF57", "#33FFBD", "#5733FF"]
- plt.figure(figsize=(10, 6))
- bars = plt.barh(team_counts['Team'], team_counts['Count'], color=unique_colors, alpha=0.8)
- for i, bar in enumerate(bars):
-  plt.text(bar.get_width(), bar.get_y() + bar.get_height()/2, int(bar.get_width()), ha='left', va='center', color='black', fontsize=12)
- plt.gca().spines['top'].set_visible(False)
- plt.gca().spines['right'].set_visible(False)
- plt.title("Number of athletes participating from five countries in the 2014 Winter Olympics")
+team_counts = team_counts.sort_values(by='Count', ascending=False)
+unique_colors = ["#FF5733", "#FFBD33", "#33FF57", "#33FFBD", "#5733FF"]
+plt.figure(figsize=(10, 6))
+bars = plt.barh(team_counts['Team'], team_counts['Count'], color=unique_colors, alpha=0.8)
+for i, bar in enumerate(bars):
+plt.text(bar.get_width(), bar.get_y() + bar.get_height()/2, int(bar.get_width()), ha='left', va='center', color='black', fontsize=12)
+plt.gca().spines['top'].set_visible(False)
+plt.gca().spines['right'].set_visible(False)
+plt.title("Number of athletes participating from five countries in the 2014 Winter Olympics")
 plt.xlabel("Athletes")
 plt.ylabel("Countries")
- st.pyplot(plt)
+st.pyplot(plt)
 
         # Plot 3
 filtered_data = athlete_events[(athlete_events['Year'] >= 1990) & (athlete_events['Year'] <= 2016)]
