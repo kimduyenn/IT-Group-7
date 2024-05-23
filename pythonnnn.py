@@ -46,15 +46,16 @@ try:
 
         # Read the optimized data
         athlete_events = pd.read_excel('optimized_Athlete_events.xlsx')
-# Plot 1
-selected_sports = ["Athletics", "Badminton", "Boxing", "Cycling", "Gymnastics", "Swimming"]
-my_data = athlete_events[(athlete_events['Year'] == 2016) & (athlete_events['Sport'].isin(selected_sports))]
-sport_counts = my_data['Sport'].value_counts(normalize=True) * 100
-explode = [0.02] * len(sport_counts)
-fig, ax = plt.subplots(figsize=(8, 8))
-ax.pie(sport_counts, labels=sport_counts.index, autopct='%1.1f%%', startangle=140, explode=explode)
-ax.axis('equal')
-st.pyplot(fig)
+try:
+    # Mã của bạn ở đây
+    selected_sports = ["Athletics", "Badminton", "Boxing", "Cycling", "Gymnastics", "Swimming"]
+    my_data = athlete_events[(athlete_events['Year'] == 2016) & (athlete_events['Sport'].isin(selected_sports))]
+    sport_counts = my_data['Sport'].value_counts(normalize=True) * 100
+    explode = [0.02] * len(sport_counts)
+    fig, ax = plt.subplots(figsize=(8, 8))
+    ax.pie(sport_counts, labels=sport_counts.index, autopct='%1.1f%%', startangle=140, explode=explode)
+    ax.axis('equal')
+    st.pyplot(fig)
 except Exception as e:
     st.error(f"An error occurred: {e}")
 
