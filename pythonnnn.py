@@ -10,11 +10,12 @@ try:
     from matplotlib.colors import LinearSegmentedColormap
     import cartopy.crs as ccrs
     import cartopy.feature as cfeature
+file_path = "https://github.com/kimduyenn/Python/raw/main/Athlete_events.xlsx"
 try:
-    file_path = "https://github.com/kimduyenn/Python/raw/main/Athlete_events.xlsx"
     # Tiếp tục với phần còn lại của mã của bạn ở dưới đây
 except Exception as e:
     st.error(f"An error occurred: {e}")
+
 
     # Title of the app
     st.title('Athlete Events Optimization and Visualization')
