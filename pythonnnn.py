@@ -57,10 +57,6 @@ try:
         ax.axis('equal')
         st.pyplot(fig)
 
-except Exception as e:
-    st.error(f"An error occurred: {e}")
-
-
         # Plot 2
         if 'athlete_events' in globals():
             Year2014 = athlete_events[athlete_events['Year'] == 2014]
@@ -121,7 +117,8 @@ except Exception as e:
         # Plot 5
         fig, axs = plt.subplots(2, 1, figsize=(12, 8))
         axs[0].hist(filtered_data[filtered_data['Sex'] == 'M']['Weight'], bins=range(0, 300, 5), color="#1f77b4", edgecolor='white', alpha
-=1, label='Male', density=False)
+=1, label='Male',
+density=False)
         axs[0].set_xlabel('Weight (kg)')
         axs[0].set_ylabel('Number of Athletes')
         axs[0].legend()
@@ -228,7 +225,8 @@ except Exception as e:
 
         world_map = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
 
-        east_asian_map = world_map[world_map['name'].isin(east_asian_countries)]
+        east_asian_map = world
+_map[world_map['name'].isin(east_asian_countries)]
 
         athlete_counts = athlete_events[
             (athlete_events['Team'].isin(east_asian_countries)) &(athlete_events['Year'].between(1990, 2016))].groupby('Team')['ID'].nunique().reset_index(name='athlete_count')
