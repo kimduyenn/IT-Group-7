@@ -197,7 +197,6 @@ else:
         plt.show()
 
 # PLOT 9
-import seaborn as sns
 
 selected_sports = ["Basketball", "Gymnastics", "Swimming", "Athletics", "Boxing", "Wrestling"]
 sport_age = athlete_events[(athlete_events['Year'] >= 1960) & (athlete_events['Year'] <= 2000) & athlete_events['Sport'].isin(selected_sports)]
