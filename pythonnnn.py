@@ -3,11 +3,7 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import streamlit as st
 import openpyxl
-import pandas as pd
-import streamlit as st
-import matplotlib.pyplot as plt
-import streamlit as st
-import openpyxl
+
 athlete_events = pd.read_excel(r"C:\Users\admin\OneDrive\文档\GitHub\Python\Athlete_events.xlsx")
 
 # PLOT 1
