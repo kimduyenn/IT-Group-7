@@ -1,27 +1,27 @@
-import pandas as pd
-import streamlit as st
-import matplotlib.pyplot as plt
-import openpyxl
-import os
-import numpy as np
-import seaborn as sns
-import geopandas as gpd
-from matplotlib.colors import LinearSegmentedColormap
-import cartopy.crs as ccrs
-import cartopy.feature as cfeature
+try:
+    import pandas as pd
+    import streamlit as st
+    import matplotlib.pyplot as plt
+    import openpyxl
+    import os
+    import numpy as np
+    import seaborn as sns
+    import geopandas as gpd
+    from matplotlib.colors import LinearSegmentedColormap
+    import cartopy.crs as ccrs
+    import cartopy.feature as cfeature
 
-# Title of the app
-st.title('Athlete Events Optimization and Visualization')
+    # Title of the app
+    st.title('Athlete Events Optimization and Visualization')
 
-# Path to the original Excel file
-file_path = r"C:\Users\admin\OneDrive\文档\GitHub\Python\Athlete_events.xlsx"
+    # Path to the original Excel file
+    file_path = r"C:\Users\admin\OneDrive\文档\GitHub\Python\Athlete_events.xlsx"
 
-# Check if the file exists
-if not os.path.exists(file_path):
-    st.error(f"File not found: {file_path}")
-else:
-    # Read the original Excel file
-    try:
+    # Check if the file exists
+    if not os.path.exists(file_path):
+        st.error(f"File not found: {file_path}")
+    else:
+        # Read the original Excel file
         excel_data = pd.read_excel(file_path, sheet_name=None)
 
         # Create a new Excel file to save the optimized data
@@ -47,7 +47,7 @@ else:
         # Read the optimized data
         athlete_events = pd.read_excel('optimized_Athlete_events.xlsx')
 
-# Plot 1
+        # Plot 1
         selected_sports = ["Athletics", "Badminton", "Boxing", "Cycling", "Gymnastics", "Swimming"]
         my_data = athlete_events[(athlete_events['Year'] == 2016) & (athlete_events['Sport'].isin(selected_sports))]
         sport_counts = my_data['Sport'].value_counts(normalize=True) * 100
@@ -57,7 +57,7 @@ else:
         ax.axis('equal')
         st.pyplot(fig)
 
- # Plot 2
+        # Plot 2
         if 'athlete_events' in globals():
             Year2014 = athlete_events[athlete_events['Year'] == 2014]
             Teams = ["United States", "Russia", "Norway", "Germany", "Canada"]
@@ -78,7 +78,7 @@ else:
             plt.ylabel("Countries")
             st.pyplot(plt)
 
- # Plot 3
+        # Plot 3
         filtered_data = athlete_events[(athlete_events['Year'] >= 1990) & (athlete_events['Year'] <= 2016)]
         filtered_data = filtered_data.dropna(subset=['Sex'])
         yearly_gender_counts = filtered_data.groupby(['Year', 'Sex']).size().unstack(fill_value=0)
