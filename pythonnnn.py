@@ -41,7 +41,7 @@ else:
         # Read the optimized data
         athlete_events = pd.read_excel(file_path)
 
-        # PLOT 1
+# PLOT 1
         # Define the selected sports
         selected_sports = ["Athletics", "Badminton", "Boxing", "Cycling", "Gymnastics", "Swimming"]
 
@@ -62,37 +62,55 @@ else:
 
     except Exception as e:
         st.error(f"An error occurred: {e}")
-
-
+        
 # PLOT 2
-Year2014 = athlete_events[athlete_events['Year'] == 2014]
+        # Check if 'athlete_events' DataFrame exists
+        if 'athlete_events' not in globals():
+            print("Error: 'athlete_events' DataFrame not found.")
+        else:
+            # Filter data for the year 2014
+            Year2014 = athlete_events[athlete_events['Year'] == 2014]
 
-Teams = ["United States", "Russia", "Norway", "Germany", "Canada"]
+            # Define the selected teams
+            Teams = ["United States", "Russia", "Norway", "Germany", "Canada"]
 
-m_data = Year2014[Year2014['Team'].isin(Teams)]
+            # Filter the data for the selected teams
+            m_data = Year2014[Year2014['Team'].isin(Teams)]
 
-m_data_unique = m_data.drop_duplicates(subset='Name', keep='first')
-team_counts = m_data_unique['Team'].value_counts().reset_index()
-team_counts.columns = ['Team', 'Count']
-team_counts = team_counts.sort_values(by='Count', ascending=False)
+            # Drop duplicates to count each athlete once per team
+            m_data_unique = m_data.drop_duplicates(subset='Name', keep='first')
 
-unique_colors = ["#FF5733", "#FFBD33", "#33FF57", "#33FFBD", "#5733FF"]
+            # Count the number of athletes per team
+            team_counts = m_data_unique['Team'].value_counts().reset_index()
+            team_counts.columns = ['Team', 'Count']
+            team_counts = team_counts.sort_values(by='Count', ascending=False)
 
-plt.figure(figsize=(10, 6))
-bars = plt.barh(team_counts['Team'], team_counts['Count'], color=unique_colors, alpha=0.8)
+            # Define unique colors for the bars
+            unique_colors = ["#FF5733", "#FFBD33", "#33FF57", "#33FFBD", "#5733FF"]
 
-average_width = team_counts['Count'].mean()
-for i, bar in enumerate(bars):
- plt.text(bar.get_width(), bar.get_y() + bar.get_height()/2, int(bar.get_width()), ha='left', va='center', color='black', fontsize=12)
+            # Create the horizontal bar plot
+            plt.figure(figsize=(10, 6))
+            bars = plt.barh(team_counts['Team'], team_counts['Count'], color=unique_colors, alpha=0.8)
 
-plt.gca().spines['top'].set_visible(False)
-plt.gca().spines['right'].set_visible(False)
+            # Add labels to the bars
+            for i, bar in enumerate(bars):
+                plt.text(bar.get_width(), bar.get_y() + bar.get_height()/2, int(bar.get_width()), ha='left', va='center', color='black', fontsize=12)
 
-plt.title("The number of athletes participating from five countries in the 2014 Winter Olympics")
-plt.xlabel("Athletes")
-plt.ylabel("Countries")
+            # Remove top and right spines
+            plt.gca().spines['top'].set_visible(False)
+            plt.gca().spines['right'].set_visible(False)
 
-plt.show()
+            # Set plot title and labels
+            plt.title("Number of athletes participating from five countries in the 2014 Winter Olympics")
+            plt.xlabel("Athletes")
+            plt.ylabel("Countries")
+
+            # Show the plot
+            st.pyplot(plt)
+
+    except Exception as e:
+        st.error(f"An error occurred: {e}")
+
 
 # PLOT 3
 filtered_data = athlete_events[(athlete_events['Year'] >= 1990) & (athlete_events['Year'] <= 2016)]
