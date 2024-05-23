@@ -3,37 +3,42 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import streamlit as st
 import openpyxl
-
+import os
 
 # Đường dẫn tới file Excel gốc
 file_path = r"C:\Users\admin\OneDrive\文档\GitHub\Python\Athlete_events.xlsx"
 
-# Đọc file Excel gốc
-excel_data = pd.read_excel(file_path, sheet_name=None)
+# Streamlit app
+st.title('Athlete Events Optimization and Visualization')
 
-# Tạo một file Excel mới để lưu dữ liệu tối ưu hóa
-writer = pd.ExcelWriter('optimized_Athlete_events.xlsx', engine='openpyxl')
+# Kiểm tra xem file có tồn tại không
+if not os.path.exists(file_path):
+    st.error(f"File not found: {file_path}")
+else:
+    # Đọc file Excel gốc
+    excel_data = pd.read_excel(file_path, sheet_name=None)
 
-# Xử lý từng trang tính (sheet)
-for sheet_name, df in excel_data.items():
-    # Loại bỏ các cột hoặc hàng không cần thiết (ví dụ)
-    # df = df.drop(columns=['Column_to_remove'])
-    # df = df[df['Some_column'] != 'Some_value']
+    # Tạo một file Excel mới để lưu dữ liệu tối ưu hóa
+    writer = pd.ExcelWriter('optimized_Athlete_events.xlsx', engine='openpyxl')
 
-    # Xóa định dạng không cần thiết
-    df.style = None
+    # Xử lý từng trang tính (sheet)
+    for sheet_name, df in excel_data.items():
+        # Loại bỏ các cột hoặc hàng không cần thiết (ví dụ)
+        # df = df.drop(columns=['Column_to_remove'])
+        # df = df[df['Some_column'] != 'Some_value']
 
-    # Lưu dữ liệu đã được tối ưu hóa vào file mới
-    df.to_excel(writer, sheet_name=sheet_name, index=False)
+        # Xóa định dạng không cần thiết
+        df.style = None
 
-# Lưu file Excel mới
-writer.save()
+        # Lưu dữ liệu đã được tối ưu hóa vào file mới
+        df.to_excel(writer, sheet_name=sheet_name, index=False)
 
-print("File đã được tối ưu hóa và lưu thành công!")
+    # Lưu file Excel mới
+    writer.save()
 
+    st.success("File đã được tối ưu hóa và lưu thành công!")
 
-athlete_events = pd.read_excel(r"C:\Users\admin\OneDrive\文档\GitHub\Python\Athlete_events.xlsx")
-
+    athlete_events = pd.read_excel(file_path)
 
 # PLOT 1
 
