@@ -43,7 +43,15 @@ else:
         
 # PLOT 1
 
- selected_sports = ["Athletics", "Badminton", "Boxing", "Cycling", "Gymnastics", "Swimming"]
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Check if athlete_events DataFrame exists
+if 'athlete_events' not in globals():
+    print("Error: 'athlete_events' DataFrame not found.")
+else:
+    # Define the selected sports
+    selected_sports = ["Athletics", "Badminton", "Boxing", "Cycling", "Gymnastics", "Swimming"]
 
     # Filter the data for the selected year and sports
     my_data = athlete_events[(athlete_events['Year'] == 2016) & (athlete_events['Sport'].isin(selected_sports))]
@@ -59,6 +67,7 @@ else:
     plt.pie(sport_counts, labels=sport_counts.index, autopct='%1.1f%%', startangle=140, explode=explode)
     plt.axis('equal')
     plt.show()
+
 
 # PLOT 2
 Year2014 = athlete_events[athlete_events['Year'] == 2014]
