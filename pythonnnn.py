@@ -1,9 +1,5 @@
 import pandas as pd
-import streamlit as st
 import matplotlib.pyplot as plt
-import streamlit as st
-import openpyxl
-
 
 athlete_events = pd.read_excel(r'D:\athlete_events.csv')
 
