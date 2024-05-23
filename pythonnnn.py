@@ -43,8 +43,6 @@ else:
         
 # PLOT 1
 
-import pandas as pd
-import matplotlib.pyplot as plt
 
 # Check if athlete_events DataFrame exists
 if 'athlete_events' not in globals():
