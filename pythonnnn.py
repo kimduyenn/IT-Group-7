@@ -5,7 +5,7 @@ import streamlit as st
 import openpyxl
 
 
-athlete_events = pd.read_excel(r"C:\Users\admin\OneDrive\文档\GitHub\Python\Athlete_events.xlsx")
+athlete_events = pd.read_excel(r'D:\athlete_events.csv')
 
 
 # PLOT 1
