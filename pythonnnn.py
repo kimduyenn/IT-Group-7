@@ -1,45 +1,46 @@
 import pandas as pd
 import streamlit as st
 import matplotlib.pyplot as plt
-import streamlit as st
 import openpyxl
 import os
 
-# Đường dẫn tới file Excel gốc
-file_path = r"C:\Users\admin\OneDrive\文档\GitHub\Python\Athlete_events.xlsx"
-
-# Streamlit app
+# Title of the app
 st.title('Athlete Events Optimization and Visualization')
 
-# Kiểm tra xem file có tồn tại không
+# Path to the original Excel file
+file_path = r"C:\Users\admin\OneDrive\文档\GitHub\Python\Athlete_events.xlsx"
+
+# Check if the file exists
 if not os.path.exists(file_path):
     st.error(f"File not found: {file_path}")
 else:
-    # Đọc file Excel gốc
-    excel_data = pd.read_excel(file_path, sheet_name=None)
+    # Read the original Excel file
+    try:
+        excel_data = pd.read_excel(file_path, sheet_name=None)
 
-    # Tạo một file Excel mới để lưu dữ liệu tối ưu hóa
-    writer = pd.ExcelWriter('optimized_Athlete_events.xlsx', engine='openpyxl')
+        # Create a new Excel file to save the optimized data
+        writer = pd.ExcelWriter('optimized_Athlete_events.xlsx', engine='openpyxl')
 
-    # Xử lý từng trang tính (sheet)
-    for sheet_name, df in excel_data.items():
-        # Loại bỏ các cột hoặc hàng không cần thiết (ví dụ)
-        # df = df.drop(columns=['Column_to_remove'])
-        # df = df[df['Some_column'] != 'Some_value']
+        # Process each sheet
+        for sheet_name, df in excel_data.items():
+            # Remove unnecessary columns or rows (example)
+            # df = df.drop(columns=['Column_to_remove'])
+            # df = df[df['Some_column'] != 'Some_value']
 
-        # Xóa định dạng không cần thiết
-        df.style = None
+            # Remove unnecessary formatting
+            df.style = None
 
-        # Lưu dữ liệu đã được tối ưu hóa vào file mới
-        df.to_excel(writer, sheet_name=sheet_name, index=False)
+            # Save the optimized data to the new file
+            df.to_excel(writer, sheet_name=sheet_name, index=False)
 
-    # Lưu file Excel mới
-    writer.save()
+        # Save the new Excel file
+        writer.save()
 
-    st.success("File đã được tối ưu hóa và lưu thành công!")
+        st.success("File has been optimized and saved successfully!")
 
-    athlete_events = pd.read_excel(file_path)
-
+        # Read the optimized data
+        athlete_events = pd.read_excel(file_path)
+        
 # PLOT 1
 
 selected_sports = ["Athletics", "Badminton", "Boxing", "Cycling", "Gymnastics", "Swimming"]
