@@ -337,7 +337,6 @@ st.plotly_chart(fig)
 # PLOT 10
 
 
-
 world_map = go.Figure(go.Choropleth())
 
 east_asian_countries = [
@@ -345,12 +344,21 @@ east_asian_countries = [
     "Laos", "Cambodia", "Thailand", "Myanmar", "Malaysia", "Singapore", "Brunei", "Philippines", "Indonesia", 
     "Timor-Leste"]
 
+iso_codes = {
+    "China": "CHN", "Japan": "JPN", "South Korea": "KOR", "North Korea": "PRK", "Taiwan": "TWN", 
+    "Hong Kong": "HKG", "Mongolia": "MNG", "Macau": "MAC", "Vietnam": "VNM", "Laos": "LAO", 
+    "Cambodia": "KHM", "Thailand": "THA", "Myanmar": "MMR", "Malaysia": "MYS", "Singapore": "SGP", 
+    "Brunei": "BRN", "Philippines": "PHL", "Indonesia": "IDN", "Timor-Leste": "TLS"
+}
+
 athlete_counts = athlete_events[
     (athlete_events['Team'].isin(east_asian_countries)) & (athlete_events['Year'].between(1990, 2016))
 ].groupby('Team')['ID'].nunique().reset_index(name='athlete_count')
 
+athlete_counts['iso_code'] = athlete_counts['Team'].map(iso_codes)
+
 world_map.add_trace(go.Choropleth(
-    locations=athlete_counts['Team'],
+    locations=athlete_counts['iso_code'],
     z=athlete_counts['athlete_count'],
     text=athlete_counts['Team'],
     colorscale='Blues',
@@ -364,7 +372,8 @@ world_map.update_layout(
         showcoastlines=True,
         showcountries=True,
         countrycolor='white',
-        coastlinecolor='black'
+        coastlinecolor='black',
+        hoverinfo='text+z'
     )
 )
 
