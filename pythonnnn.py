@@ -164,49 +164,46 @@ st.plotly_chart(fig)
 # PLOT 6
 
 
-athlete_events = pd.DataFrame({
-    'Year': np.random.randint(1990, 2023, 1000),
-    'Season': np.random.choice(['Summer', 'Winter'], 1000),
-    'Sport': np.random.choice(['Athletics', 'Swimming', 'Skiing', 'Cycling', 'Gymnastics'], 1000)
-})
-
-st.title('Olympic Sports Participation')
-st.write('Number of Sports Participated in Summer and Winter Seasons (1990-2022)')
-
 filtered_dat = athlete_events[athlete_events['Year'] >= 1990]
 filtered_dat = filtered_dat[['Year', 'Season', 'Sport']].drop_duplicates()
 
 sports_count = filtered_dat.groupby(['Year', 'Season']).size().unstack(fill_value=0)
+fig, axs = plt.subplots(2, 1, figsize=(12, 12))
 
 years = sports_count.index
 summer_counts = sports_count['Summer']
-winter_counts = sports_count['Winter']
+bar_width = 0.35
+x = np.arange(len(years))
 
-fig, axs = plt.subplots(2, 1, figsize=(12, 12))
-
-axs[0].bar(years, summer_counts, color='#FFA500', alpha=0.7, label='Summer')
+axs[0].bar(x, summer_counts, width=bar_width, color='#FFA500', alpha=0.7, label='Summer')
 axs[0].set_xlabel('Year')
 axs[0].set_ylabel('Number of Sports')
 axs[0].set_title('Number of Sports Participated in Summer Season (1990-2022)')
+axs[0].set_xticks(x)
+axs[0].set_xticklabels(years)
 axs[0].legend()
 axs[0].grid(True, linestyle='-', alpha=0.2)
 
 for i, summer_count in enumerate(summer_counts):
-    axs[0].text(years[i], summer_count, str(summer_count), ha='center', va='bottom', fontsize=10)
+  axs[0].text(x[i], summer_count, str(summer_count), ha='center', va='bottom', fontsize=12)
 
-axs[1].bar(years, winter_counts, color='#4682B4', alpha=0.7, label='Winter')
+winter_counts = sports_count['Winter']
+
+axs[1].bar(x, winter_counts, width=bar_width, color='#4682B4', alpha=0.7, label='Winter')
 axs[1].set_xlabel('Year')
 axs[1].set_ylabel('Number of Sports')
 axs[1].set_title('Number of Sports Participated in Winter Season (1990-2022)')
+axs[1].set_xticks(x)
+axs[1].set_xticklabels(years)
 axs[1].legend()
 axs[1].grid(True, linestyle='-', alpha=0.2)
 
 for i, winter_count in enumerate(winter_counts):
-    axs[1].text(years[i], winter_count, str(winter_count), ha='center', va='bottom', fontsize=10)
+  axs[1].text(x[i], winter_count, str(winter_count), ha='center', va='bottom', fontsize=12)
+
+plt.tight_layout()
 
 st.pyplot(fig)
-
-
 
 # PLOT 7
 
