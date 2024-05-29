@@ -336,7 +336,6 @@ st.plotly_chart(fig)
 
 # PLOT 10
 
-
 world_map = go.Figure(go.Choropleth())
 
 east_asian_countries = [
@@ -372,8 +371,12 @@ world_map.update_layout(
         showcoastlines=True,
         showcountries=True,
         countrycolor='white',
-        coastlinecolor='black',
-        hoverinfo='text+z'
+        coastlinecolor='black'
+    ),
+    hoverlabel=dict(
+        bgcolor="white",
+        font_size=16,
+        font_family="Arial"
     )
 )
 
