@@ -101,3 +101,21 @@ fig.update_layout(
 )
 
 st.plotly_chart(fig)
+
+
+# PLOT 4
+b_data = athlete_events[athlete_events['Sport'].isin(["Boxing", "Football", "Judo", "Swimming", "Taekwondo"])]
+
+athlete_counts = b_data['Sport'].value_counts().reset_index()
+athlete_counts.columns = ['Sport', 'Count']
+
+fig = px.pie(
+    athlete_counts,
+    values='Count',
+    names='Sport',
+    title='The number of athletes participating in the Olympic during 120 Years',
+    hole=0.7,  # To create a donut chart
+    color_discrete_sequence=px.colors.qualitative.Tab10
+)
+
+st.plotly_chart(fig)
