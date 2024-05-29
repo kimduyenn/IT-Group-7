@@ -359,7 +359,7 @@ world_map.add_trace(go.Choropleth(
 ))
 
 world_map.update_layout(
-    title='Number of Athletes in East Asian Countries (1990-2016)',
+    title='Number of Athletes in Southeast Asian and East Asian Countries (1990-2016)',
     geo=dict(
         showcoastlines=True,
         showcountries=True,
