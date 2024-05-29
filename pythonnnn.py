@@ -104,11 +104,32 @@ st.plotly_chart(fig)
 
 
 # PLOT 4
+
+
+b_data = athlete_events[athlete_events['Sport'].isin(["Boxing", "Football", "Judo", "Swimming", "Taekwondo"])]
+
+athlete_counts = b_data['Sport'].value_counts().reset_index()
+athlete_counts.columns = ['Sport', 'Count']
+
+color_sequence = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd"]
+
+fig = px.pie(
+    athlete_counts,
+    values='Count',
+    names='Sport',
+    title='The number of athletes participating in the Olympic during 120 Years',
+    hole=0.7,  # To create a donut chart
+    color_discrete_sequence=color_sequence
+)
+
+st.plotly_chart(fig)
+
+# PLOT 5
+
 filtered_dat = athlete_events[(athlete_events['Season'] == "Summer") & (athlete_events['Year'] >= 1990) & (athlete_events['Year'] <= 2016)]
 filtered_dat = filtered_dat[['Weight', 'Sex']].dropna()
 filtered_dat['Weight'] = pd.to_numeric(filtered_dat['Weight'])
 
-# Create histograms using Plotly
 fig = go.Figure()
 
 fig.add_trace(go.Histogram(
@@ -127,7 +148,6 @@ fig.add_trace(go.Histogram(
     opacity=0.75
 ))
 
-# Update layout
 fig.update_layout(
     title_text='Distribution of Athletes’ Weights by Gender (Summer Olympics 1990-2016)',
     xaxis_title_text='Weight (kg)',
@@ -137,5 +157,4 @@ fig.update_layout(
     bargroupgap=0.1
 )
 
-# Display the chart in Streamlit
 st.plotly_chart(fig)
