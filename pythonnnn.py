@@ -13,7 +13,7 @@ athlete_events = pd.read_excel(r'Athlete_events.xlsx')
 st.write(athlete_events) 
 
 # PLOT 1
-st.write(Distribution of Athletes in Selected Sports (2016))
+st.write("Distribution of Athletes in Selected Sports (2016)")
 selected_sports = ["Athletics", "Badminton", "Boxing", "Cycling", "Gymnastics", "Swimming"]
 my_data = athlete_events[(athlete_events['Year'] == 2016) & (athlete_events['Sport'].isin(selected_sports))]
 
