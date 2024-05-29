@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import plotly.graph_objects as go
 import openpyxl
 import numpy as np
 import geopandas as gpd
@@ -56,3 +57,47 @@ fig.update_layout(
 
 st.plotly_chart(fig)
 
+
+
+# PLOT 3
+
+filtered_data = athlete_events[(athlete_events['Year'] >= 1990) & (athlete_events['Year'] <= 2016)]
+filtered_data = filtered_data.dropna(subset=['Sex'])
+
+yearly_gender_counts = filtered_data.groupby(['Year', 'Sex']).size().unstack(fill_value=0)
+
+yearly_gender_counts['Total'] = yearly_gender_counts['M'] + yearly_gender_counts['F']
+yearly_gender_counts.sort_values(by='Year', inplace=True)
+
+fig = go.Figure()
+
+fig.add_trace(go.Bar(
+    x=yearly_gender_counts.index,
+    y=yearly_gender_counts['M'],
+    name='Male',
+    marker_color='#FF6666',
+    text=yearly_gender_counts['M'],
+    textposition='auto'
+))
+
+fig.add_trace(go.Bar(
+    x=yearly_gender_counts.index,
+    y=yearly_gender_counts['F'],
+    name='Female',
+    marker_color='#FF9966',
+    text=yearly_gender_counts['F'],
+    textposition='auto'
+))
+fig.update_layout(
+    title='Number of Athletes by Gender (1990-2016)',
+    xaxis_title='Year',
+    yaxis_title='Number of Athletes',
+    barmode='stack',
+    legend_title_text='Sex',
+    plot_bgcolor='rgba(0,0,0,0)',
+    xaxis=dict(tickmode='linear'),
+    yaxis=dict(gridcolor='rgba(128,128,128,0.1)'),
+    showlegend=True
+)
+
+st.plotly_chart(fig)
