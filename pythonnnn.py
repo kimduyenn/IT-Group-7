@@ -12,7 +12,6 @@ import streamlit as st
 athlete_events = pd.read_excel(r'Athlete_events.xlsx')
 
 click = st.button("click here")
-st.sidebar.text(" Here are 10 different graphs)
   
 
 # PLOT 1
