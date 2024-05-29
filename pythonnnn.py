@@ -289,12 +289,23 @@ st.plotly_chart(fig)
 # plot 9
 
 
+selected_sports = ["Basketball", "Gymnastics", "Swimming", "Athletics", "Boxing", "Wrestling"]
+
 sport_age = athlete_events[(athlete_events['Year'] >= 1960) & (athlete_events['Year'] <= 2000) & athlete_events['Sport'].isin(selected_sports)]
 
 sport_age['Year'] = pd.to_numeric(sport_age['Year'], errors='coerce')
 sport_age['Age'] = pd.to_numeric(sport_age['Age'], errors='coerce')
 
 sport_medians = sport_age.groupby('Sport')['Age'].median().sort_values().index
+
+sport_colors = {
+    "Basketball": "#1f77b4",  
+    "Gymnastics": "#ff7f0e",  
+    "Swimming": "#2ca02c",     
+    "Athletics": "#d62728",    
+    "Boxing": "#9467bd",       
+    "Wrestling": "#8c564b"     
+}
 
 fig = go.Figure()
 
@@ -304,7 +315,7 @@ for sport in sport_medians:
         x=data['Sport'],
         y=data['Age'],
         name=sport,
-        marker_color='rgb(31, 119, 180)',  # Blue color
+        marker_color=sport_colors[sport],  
         boxmean='sd',
         hoverinfo='y+name',
         boxpoints='all'
@@ -317,51 +328,4 @@ fig.update_layout(
     showlegend=True,
     hovermode='closest'
 )
-
-st.plotly_chart(fig)
-
-
-# plot 10
-
-
-world_map = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
-
-east_asian_countries = [
-    "China", "Japan", "South Korea", "North Korea", "Taiwan", "Hong Kong", "Mongolia", "Macau", "Vietnam", 
-    "Laos", "Cambodia", "Thailand", "Myanmar", "Malaysia", "Singapore", "Brunei", "Philippines", "Indonesia", 
-    "Timor-Leste"]
-
-east_asian_map = world_map[world_map['name'].isin(east_asian_countries)]
-
-athlete_counts = athlete_events[
-    (athlete_events['Team'].isin(east_asian_countries)) & (athlete_events['Year'].between(1990, 2016))
-].groupby('Team')['ID'].nunique().reset_index(name='athlete_count')
-
-east_asian_map_with_athletes = east_asian_map.merge(athlete_counts, left_on='name', right_on='Team', how='left')
-
-east_asian_map_with_athletes['athlete_count'] = east_asian_map_with_athletes['athlete_count'].fillna(0)
-
-fig = go.Figure()
-
-fig.add_trace(go.Choropleth(
-    geojson=east_asian_map_with_athletes.geometry,
-    locations=east_asian_map_with_athletes.index,
-    z=east_asian_map_with_athletes['athlete_count'],
-    locationmode='geojson-id',
-    colorscale='Blues',
-    marker_line_color='white',
-    marker_line_width=0.5,
-    colorbar_title='Athlete Count'
-))
-
-fig.update_layout(
-    title='Number of Athletes in East Asian Countries (1990-2016)',
-    geo=dict(
-        showcoastlines=True,
-        showcountries=True,
-        countrycolor='white',
-        coastlinecolor='black'
-    )
-)
-
 st.plotly_chart(fig)
