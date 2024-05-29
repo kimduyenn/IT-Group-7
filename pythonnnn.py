@@ -247,3 +247,80 @@ st.plotly_chart(fig)
 
 
 # PLOT 8
+
+
+filtered_dat = athlete_events[(athlete_events['Year'] >= 1990) & (athlete_events['Year'] <= 2016)]
+
+summary_dat = filtered_dat.groupby(['Year', 'Season']).size().reset_index(name='total_athletes')
+
+fig = go.Figure()
+
+for season, color in zip(['Summer', 'Winter'], ['darkorange', 'steelblue']):
+    data = summary_dat[summary_dat['Season'] == season]
+    fig.add_trace(go.Scatter(
+        x=data['Year'],
+        y=data['total_athletes'],
+        mode='lines+markers',
+        name=season,
+        line=dict(color=color),
+        marker=dict(color=color, size=8),
+        text=data['total_athletes'],
+        hovertemplate='<b>%{x}</b><br><br>Total Athletes: %{y}',
+    ))
+
+fig.update_layout(
+    title='Total Athletes in Summer and Winter (1990-2016)',
+    xaxis_title='Year',
+    yaxis_title='Total Athletes',
+    legend_title='Season',
+    legend=dict(
+        yanchor="top",
+        y=0.99,
+        xanchor="right",
+        x=0.99
+    ),
+    showlegend=True,
+    hovermode='x'
+)
+
+st.plotly_chart(fig)
+
+
+# plot 9
+
+
+sport_age = athlete_events[(athlete_events['Year'] >= 1960) & (athlete_events['Year'] <= 2000) & athlete_events['Sport'].isin(selected_sports)]
+
+sport_age['Year'] = pd.to_numeric(sport_age['Year'], errors='coerce')
+sport_age['Age'] = pd.to_numeric(sport_age['Age'], errors='coerce')
+
+sport_medians = sport_age.groupby('Sport')['Age'].median().sort_values().index
+
+fig = go.Figure()
+
+for sport in sport_medians:
+    data = sport_age[sport_age['Sport'] == sport]
+    fig.add_trace(go.Box(
+        x=data['Sport'],
+        y=data['Age'],
+        name=sport,
+        marker_color='rgb(31, 119, 180)',  # Blue color
+        boxmean='sd',
+        hoverinfo='y+name',
+        boxpoints='all'
+    ))
+
+fig.update_layout(
+    title='Distribution of Age by Sport (1960-2000)',
+    xaxis_title='Sport',
+    yaxis_title='Age',
+    showlegend=True,
+    hovermode='closest'
+)
+
+st.plotly_chart(fig)
+
+
+# plot 10
+
+
