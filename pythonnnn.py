@@ -154,7 +154,96 @@ fig.update_layout(
     yaxis_title_text='Number of Athletes',
     barmode='overlay',
     bargap=0.1,
-    bargroupgap=0.1
+    bargroupgap=0.1,
+    legend_title_text='Gender'
 )
 
 st.plotly_chart(fig)
+
+
+# PLOT 6
+
+
+filtered_dat = athlete_events[athlete_events['Year'] >= 1990]
+filtered_dat = filtered_dat[['Year', 'Season', 'Sport']].drop_duplicates()
+sports_count = filtered_dat.groupby(['Year', 'Season']).size().unstack(fill_value=0)
+
+fig = go.Figure()
+
+years = sports_count.index
+
+fig.add_trace(go.Bar(
+    x=years,
+    y=sports_count['Summer'],
+    name='Summer',
+    marker_color='#FFA500',
+    text=sports_count['Summer'],
+    textposition='outside'
+))
+
+fig.add_trace(go.Bar(
+    x=years,
+    y=sports_count['Winter'],
+    name='Winter',
+    marker_color='#4682B4',
+    text=sports_count['Winter'],
+    textposition='outside'
+))
+
+fig.update_layout(
+    title='Number of Sports Participated in Summer and Winter Seasons (1990-2022)',
+    xaxis_title='Year',
+    yaxis_title='Number of Sports',
+    barmode='group',
+    bargap=0.15,
+    bargroupgap=0.1,
+    legend_title_text='Season'
+)
+
+st.plotly_chart(fig)
+
+
+# PLOT 7
+
+
+year2002 = athlete_events[athlete_events['Year'] == 2002]
+
+year2002['Age'] = pd.to_numeric(year2002['Age'], errors='coerce')
+
+year2002_count = year2002.drop_duplicates(subset=['ID', 'Age', 'Sex'])
+
+year2002_count = year2002_count.groupby(['Age', 'Sex']).size().reset_index(name='count')
+
+fig = go.Figure()
+
+for sex, color in zip(['M', 'F'], ['blue', 'red']):
+    data = year2002_count[year2002_count['Sex'] == sex]
+    fig.add_trace(go.Scatter(
+        x=data['Age'],
+        y=data['count'],
+        mode='lines',
+        fill='tozeroy',
+        name=sex,
+        line=dict(color=color),
+        hovertemplate='<b>%{x}</b><br><br>Athletes: %{y}',
+    ))
+
+fig.update_layout(
+    title='Density Chart with Athlete Count by Age and Sex in 2002',
+    xaxis_title='Age',
+    yaxis_title='Athletes',
+    legend_title='Sex',
+    legend=dict(
+        yanchor="top",
+        y=0.99,
+        xanchor="right",
+        x=0.99
+    ),
+    showlegend=True,
+    hovermode='x'
+)
+
+st.plotly_chart(fig)
+
+
+# PLOT 8
