@@ -24,3 +24,35 @@ fig.update_traces(textposition='inside', textinfo='percent+label')
 st.plotly_chart(fig)
 
 
+# PLOT 2
+
+Year2014 = athlete_events[athlete_events['Year'] == 2014]
+Teams = ["United States", "Russia", "Norway", "Germany", "Canada"]
+m_data = Year2014[Year2014['Team'].isin(Teams)]
+
+m_data_unique = m_data.drop_duplicates(subset='Name', keep='first')
+
+team_counts = m_data_unique['Team'].value_counts().reset_index()
+team_counts.columns = ['Team', 'Count']
+team_counts = team_counts.sort_values(by='Count', ascending=False)
+
+unique_colors = ["#FF5733", "#FFBD33", "#33FF57", "#33FFBD", "#5733FF"]
+
+fig = px.bar(
+    team_counts,
+    x='Count',
+    y='Team',
+    orientation='h',
+    color='Team',
+    color_discrete_sequence=unique_colors,
+    title="The number of athletes participating from five countries in the 2014 Winter Olympics",
+    labels={'Count': 'Athletes', 'Team': 'Countries'}
+)
+
+fig.update_layout(
+    yaxis=dict(categoryorder='total ascending'),
+    showlegend=False
+)
+
+st.plotly_chart(fig)
+
