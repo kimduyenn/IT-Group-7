@@ -324,3 +324,44 @@ st.plotly_chart(fig)
 # plot 10
 
 
+world_map = gpd.read_file(gpd.datasets.get_path('naturalearth_lowres'))
+
+east_asian_countries = [
+    "China", "Japan", "South Korea", "North Korea", "Taiwan", "Hong Kong", "Mongolia", "Macau", "Vietnam", 
+    "Laos", "Cambodia", "Thailand", "Myanmar", "Malaysia", "Singapore", "Brunei", "Philippines", "Indonesia", 
+    "Timor-Leste"]
+
+east_asian_map = world_map[world_map['name'].isin(east_asian_countries)]
+
+athlete_counts = athlete_events[
+    (athlete_events['Team'].isin(east_asian_countries)) & (athlete_events['Year'].between(1990, 2016))
+].groupby('Team')['ID'].nunique().reset_index(name='athlete_count')
+
+east_asian_map_with_athletes = east_asian_map.merge(athlete_counts, left_on='name', right_on='Team', how='left')
+
+east_asian_map_with_athletes['athlete_count'] = east_asian_map_with_athletes['athlete_count'].fillna(0)
+
+fig = go.Figure()
+
+fig.add_trace(go.Choropleth(
+    geojson=east_asian_map_with_athletes.geometry,
+    locations=east_asian_map_with_athletes.index,
+    z=east_asian_map_with_athletes['athlete_count'],
+    locationmode='geojson-id',
+    colorscale='Blues',
+    marker_line_color='white',
+    marker_line_width=0.5,
+    colorbar_title='Athlete Count'
+))
+
+fig.update_layout(
+    title='Number of Athletes in East Asian Countries (1990-2016)',
+    geo=dict(
+        showcoastlines=True,
+        showcountries=True,
+        countrycolor='white',
+        coastlinecolor='black'
+    )
+)
+
+st.plotly_chart(fig)
