@@ -10,11 +10,7 @@ import cartopy.feature as cfeature
 import plotly.express as px
 import streamlit as st
 
-def Chao():
-print ("Group 7 welcome everyone to watch my web!")
-return;
-Chao()
-    
+
 athlete_events = pd.read_excel(r'Athlete_events.xlsx')
 st.write(athlete_events) 
 
@@ -101,7 +97,7 @@ fig.update_layout(
     barmode='stack',
     legend_title_text='Sex',
     plot_bgcolor='rgba(0,0,0,0)',
-    xaxis=dict(tickmode='linear'),
+    xaxis=dict(tickmode='linear', rotation=45),
     yaxis=dict(gridcolor='rgba(128,128,128,0.1)'),
     showlegend=True
 )
