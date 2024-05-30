@@ -194,7 +194,6 @@ st.pyplot(fig)
 
 # PLOT 7
 
-
 year2002 = athlete_events[athlete_events['Year'] == 2002]
 
 year2002['Age'] = pd.to_numeric(year2002['Age'], errors='coerce')
@@ -206,7 +205,7 @@ year2002_count = year2002_count.groupby(['Age', 'Sex']).size().reset_index(name=
 fig = go.Figure()
 
 for sex, color in zip(['M', 'F'], ['blue', 'red']):
-data = year2002_count[year2002_count['Sex'] == sex]
+    data = year2002_count[year2002_count['Sex'] == sex]
     fig.add_trace(go.Scatter(
         x=data['Age'],
         y=data['count'],
