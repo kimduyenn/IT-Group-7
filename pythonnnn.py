@@ -90,6 +90,7 @@ fig.add_trace(go.Bar(
     text=yearly_gender_counts['F'],
     textposition='auto'
 ))
+
 fig.update_layout(
     title='Number of Athletes by Gender (1990-2016)',
     xaxis_title='Year',
