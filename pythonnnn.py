@@ -9,9 +9,13 @@ import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 import plotly.express as px
 import streamlit as st
+
+def Chao():
+print ("Group 7 welcome everyone to watch my web!")
+return;
+Chao()
+    
 athlete_events = pd.read_excel(r'Athlete_events.xlsx')
->>> print("Hello, World!")
-Hello, World!
 st.write(athlete_events) 
 
 # PLOT 1
