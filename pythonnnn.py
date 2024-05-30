@@ -98,7 +98,6 @@ fig.update_layout(
     legend_title_text='Sex',
     plot_bgcolor='rgba(0,0,0,0)',
     xaxis=dict(tickmode='linear'),
-    plt.xticks(rotation=45),
     yaxis=dict(gridcolor='rgba(128,128,128,0.1)'),
     showlegend=True
 )
