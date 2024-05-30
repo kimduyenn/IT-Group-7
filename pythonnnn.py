@@ -10,6 +10,8 @@ import cartopy.feature as cfeature
 import plotly.express as px
 import streamlit as st
 athlete_events = pd.read_excel(r'Athlete_events.xlsx')
+>>> print("Hello, World!")
+Hello, World!
 st.write(athlete_events) 
 
 # PLOT 1
@@ -118,7 +120,7 @@ fig = px.pie(
     values='Count',
     names='Sport',
     title='The number of athletes participating in the Olympic during 120 Years',
-    hole=0.7,  # To create a donut chart
+    hole=0.7,  
     color_discrete_sequence=color_sequence
 )
 
