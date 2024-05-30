@@ -1,3 +1,20 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import plotly.graph_objects as go
+import openpyxl
+import numpy as np
+import geopandas as gpd
+from matplotlib.colors import LinearSegmentedColormap
+import cartopy.crs as ccrs
+import cartopy.feature as cfeature
+import plotly.express as px
+import streamlit as st
+athlete_events = pd.read_excel(r'Athlete_events.xlsx')
+
+
+
+
+
 # PLOT 1
 
 selected_sports = ["Athletics", "Badminton", "Boxing", "Cycling", "Gymnastics", "Swimming"]
