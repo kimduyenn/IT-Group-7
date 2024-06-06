@@ -5,6 +5,7 @@ import seaborn as sns
 import plotly.express as px
 import plotly.graph_objects as go
 color_theme_list = ['blues', 'cividis', 'greens', 'inferno', 'magma', 'plasma', 'reds', 'rainbow', 'turbo', 'viridis']
+selected_color_theme = st.selectbox('Select a color theme', color_theme_list)
 
 # Load the data
 file_path = 'Athlete_events.xlsx'
