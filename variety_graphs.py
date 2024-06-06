@@ -95,7 +95,7 @@ st.plotly_chart(fig_tree)
 
 # Plotting - Heatmap for Number of Athletes by Country and Year
 st.header("Number of Athletes by Country and Year")
-heatmap_data = filtered_data.groupby(['NOC', 'Year']).size().unstack(fill_value=0)
+heatmap_data = filtered_data.groupby(['Country', 'Year']).size().unstack(fill_value=0)
 fig_heatmap = px.imshow(heatmap_data, labels=dict(x="Year", y="Country", color="Number of Athletes"),
                         title=f'Number of Athletes by Country and Year in {sport}', 
                         x=heatmap_data.columns, y=heatmap_data.index)
