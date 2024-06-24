@@ -9,4 +9,7 @@ openpyxl==3.1.2
 streamlit
 plotly
 streamlit-lottie
-
+requests
+streamlit-extras
+annotated-text
+Pillow
