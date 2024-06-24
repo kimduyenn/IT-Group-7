@@ -8,5 +8,5 @@ cartopy
 openpyxl==3.1.2
 streamlit
 plotly
-
+streamlit-lottie
 
