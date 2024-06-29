@@ -30,7 +30,7 @@ stoggle(
     4. Kim Duyen - 10323044
     """
 )
-st.write("[Accessing our dataset >](https://python-itpython2group7.streamlit.app/)") 
+st.write("[Accessing our dataset >](https://www.kaggle.com/datasets/heesoo37/120-years-of-olympic-history-athletes-and-results)") 
 
 # Adding rain effect
 rain(
