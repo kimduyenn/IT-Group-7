@@ -24,14 +24,12 @@ st.write("We are a group of business students who are interested in the economic
 stoggle(
     "Group information",
     """
-
- 1. Tran Thi Thuy Trang - 10323060
-
- 2. Tran Ngoc My Thao - 10323059
-
- 3. Luong Nu Mai Nhung - 10323056
-
- 4. Kim Duyen - 10323044 """,)
+    1. Tran Thi Thuy Trang - 10323060
+    2. Tran Ngoc My Thao - 10323059
+    3. Luong Nu Mai Nhung - 10323056
+    4. Kim Duyen - 10323044
+    """
+)
 st.write("[Accessing our dataset >](https://python-itpython2group7.streamlit.app/)") 
 
 # Adding rain effect
@@ -49,32 +47,25 @@ colored_header(
     color_name="light-blue-70",
 )
 
-# Group member 1
-tv2 = st.columns(2)
+# Group members information
 st.subheader("**Full name: Tran Thi Thuy Trang**")
 st.write("Student ID: 10323060")
 st.write("Email: 10323060@student.vgu.edu.vn")
 st.write("Major: Finance & Accounting (BFA)")
 
-# Group member 2
-hq2 = st.columns(2)
 st.subheader("**Full name: Tran Ngoc My Thao**")
 st.write("Student ID: 10323059")
 st.write("Email: 10323059@student.vgu.edu.vn")
 st.write("Major: Finance & Accounting (BFA)")
 
-# Group member 3
-mh2 = st.columns(2)
 st.subheader("**Full name: Luong Nu Mai Nhung**")
 st.write("Student ID: 10323056")
 st.write("Email: 10323056@student.vgu.edu.vn")
 st.write("Major: Finance & Accounting (BFA)")
 
-# Group member 4
-mh2 = st.columns(2)
 st.subheader("**Full name: Kim Duyen**")
 st.write("Student ID: 10323044")
 st.write("Email: 10323044@student.vgu.edu.vn")
 st.write("Major: Finance & Accounting (BFA)")
-st.markdown("---")
 
+st.markdown("---")
