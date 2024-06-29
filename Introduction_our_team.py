@@ -2,15 +2,15 @@ import streamlit as st
 import pandas as pd 
 import numpy as np
 import json
-import streamlit_lottie as st_lottie
 import requests
-from streamlit_extras.colored_header import colored_header
-from annotated_text import annotated_text
+import streamlit_lottie as st_lottie
+import plotly.express as px
+import matplotlib.pyplot as plt
 from PIL import Image
+from streamlit_extras.colored_header import colored_header
 from streamlit_extras.stoggle import stoggle
 from streamlit_extras.let_it_rain import rain
-import matplotlib.pyplot as plt
-import plotly.express as px
+from annotated_text import annotated_text
 
 # Page configuration
 st.set_page_config(page_title="PYTHON 2 - BUSINESS IT 2", page_icon="🥰", layout="wide")
@@ -18,7 +18,7 @@ st.set_page_config(page_title="PYTHON 2 - BUSINESS IT 2", page_icon="🥰", layo
 # Header and description
 st.subheader("Group 7")
 st.title("PYTHON 2 - BUSINESS IT 2 :blue_heart:")
-st.write("We are a group of business students who are interested in the economical situation in the world. Therefore, we decided to analyze a set of data about the employment fluctuation in the USA from 1978 to 2022. Through this visualization, we hope to bring a clear vision to people about how the labor market in the USA has changed over the past decades.")
+st.write("We are a group of business students who are interested in the economic situation in the world. Therefore, we decided to analyze a dataset about the employment fluctuation in the USA from 1978 to 2022. Through this visualization, we hope to provide a clear view of how the US labor market has evolved over the decades.")
 
 # Group information toggle
 stoggle(
@@ -43,29 +43,22 @@ rain(
 # Group members introduction header
 colored_header(
     label="Group members introduction",
-    description="Get to know about our group",
+    description="Get to know our group",
     color_name="light-blue-70",
 )
 
 # Group members information
-st.subheader("**Full name: Tran Thi Thuy Trang**")
-st.write("Student ID: 10323060")
-st.write("Email: 10323060@student.vgu.edu.vn")
-st.write("Major: Finance & Accounting (BFA)")
+members_info = [
+    {"name": "Tran Thi Thuy Trang", "student_id": "10323060", "email": "10323060@student.vgu.edu.vn", "major": "Finance & Accounting (BFA)"},
+    {"name": "Tran Ngoc My Thao", "student_id": "10323059", "email": "10323059@student.vgu.edu.vn", "major": "Finance & Accounting (BFA)"},
+    {"name": "Luong Nu Mai Nhung", "student_id": "10323056", "email": "10323056@student.vgu.edu.vn", "major": "Finance & Accounting (BFA)"},
+    {"name": "Kim Duyen", "student_id": "10323044", "email": "10323044@student.vgu.edu.vn", "major": "Finance & Accounting (BFA)"}
+]
 
-st.subheader("**Full name: Tran Ngoc My Thao**")
-st.write("Student ID: 10323059")
-st.write("Email: 10323059@student.vgu.edu.vn")
-st.write("Major: Finance & Accounting (BFA)")
-
-st.subheader("**Full name: Luong Nu Mai Nhung**")
-st.write("Student ID: 10323056")
-st.write("Email: 10323056@student.vgu.edu.vn")
-st.write("Major: Finance & Accounting (BFA)")
-
-st.subheader("**Full name: Kim Duyen**")
-st.write("Student ID: 10323044")
-st.write("Email: 10323044@student.vgu.edu.vn")
-st.write("Major: Finance & Accounting (BFA)")
+for member in members_info:
+    st.subheader(f"**Full name: {member['name']}**")
+    st.write(f"Student ID: {member['student_id']}")
+    st.write(f"Email: {member['email']}")
+    st.write(f"Major: {member['major']}")
 
 st.markdown("---")
