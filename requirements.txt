@@ -9,3 +9,6 @@ openpyxl==3.1.2
 streamlit
 plotly
 streamlit_lottie
+streamlit_extras
+requests
+Pillow
