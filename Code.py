@@ -1,3 +1,7 @@
+import pandas as pd
+import streamlit as st
+import altair as alt
+import plotly.express as px
 # Read the data from Excel
 data = pd.read_excel('Athlete_events.xlsx')
 
