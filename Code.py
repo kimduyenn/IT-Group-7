@@ -2,11 +2,9 @@ import pandas as pd
 import streamlit as st
 import altair as alt
 import plotly.express as px
-# Read the data from Excel
-data = pd.read_excel('Athlete_events.xlsx')
 
-# Verify column names to ensure we use the correct one
-print(data.columns)
+# Read the data from Excel
+data = pd.read_excel('D:\Athlete_events.xlsx')
 
 # Group members information
 members_info = [
@@ -56,13 +54,12 @@ st.sidebar.write('**:bulb: Members of Group 7 Business IT 2 :**')
 for member in members_info:
     st.sidebar.write(member['name'])
 
-# Initial 4 tabs for each interactive graph
-tab1, tab2, tab3, tab4 = st.tabs(["Top Countries Bar Chart", "Age Distribution Boxplot", "Geographic Distribution", "Height and Weight Scatter Plot"])
+
 
 ### TAB 1: BAR CHART
 with tab1:
-    # Calculate the value counts of NOC
-    df = data['NOC'].value_counts()
+    # Calculate the value counts of Birth_Country
+    df = data['Team'].value_counts()
 
     # Set the initial value for the slider
     value = 5
@@ -98,6 +95,24 @@ with tab1:
     # Display the chart using Streamlit
     st.altair_chart(bars, use_container_width=True)
 
+### TAB 2: AGE DISTRIBUTION OVER TIME
+with tab2:
+    # Filter data to remove rows with missing 'Age' or 'Year'
+    data_filtered = data.dropna(subset=['Age', 'Year'])
+
+    # Calculate average age per year
+    avg_age_year = data_filtered.groupby('Year')['Age'].mean().reset_index()
+
+    # Plot the line chart
+    st.subheader("Average Age of Olympic Athletes Over Time")
+    st.write("Explore how the average age of Olympic athletes has changed over the years.")
+
+    # Create the line chart using Plotly
+    fig = px.line(avg_age_year, x='Year', y='Age', title='Average Age of Olympic Athletes Over Time')
+
+    # Customize layout and display the plot
+    fig.update_traces(mode='lines+markers')
+    st.plotly_chart(fig, use_container_width=True)
 
 ### TAB 3: GEOGRAPHIC DISTRIBUTION
 # Calculate the count of athletes by birth country
