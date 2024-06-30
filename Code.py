@@ -1,10 +1,8 @@
-import pandas as pd
-import streamlit as st
-import altair as alt
-import plotly.express as px
-
 # Read the data from Excel
 data = pd.read_excel('Athlete_events.xlsx')
+
+# Verify column names to ensure we use the correct one
+print(data.columns)
 
 # Group members information
 members_info = [
@@ -59,7 +57,7 @@ tab1, tab2, tab3, tab4 = st.tabs(["Top Countries Bar Chart", "Age Distribution B
 
 ### TAB 1: BAR CHART
 with tab1:
-    # Calculate the value counts of NOC (country)
+    # Calculate the value counts of NOC
     df = data['NOC'].value_counts()
 
     # Set the initial value for the slider
@@ -99,125 +97,92 @@ with tab1:
 ### TAB 2: BOXPLOT CHART
 with tab2:
     # Filter data to remove rows with missing 'Age'
-    data = data.dropna(subset=['Age'])
-
-    # Sort the data by Age in ascending order
-    data_sorted = data.sort_values(by='Age', ascending=True)
-
-    # Create a subset of data for Summer and Winter Olympics
-    summer = data_sorted[data_sorted['Season'] == 'Summer']
-    winter = data_sorted[data_sorted['Season'] == 'Winter']
-
-    # Create a palette color for seasons
-    season_colors = {
-        'Summer': '#FFD700',
-        'Winter': '#00BFFF'
-    }
+    data_filtered = data.dropna(subset=['Age'])
 
     # Add the title of the plot
     st.subheader("Age Distribution of Olympic Athletes")
 
-    # Store the initial value of widgets in session state
-    if "disabled" not in st.session_state:
-        st.session_state.disabled = False
+    # Display options for user selection
+    st.write("Choose the aggregation method and statistic you want to visualize:")
 
-    col1, col2, col3 = st.columns([2,2,3])
-    with col1:
-        overview = st.checkbox("Overview of all seasons", key="disabled")
-        age_type = st.radio("Choose a value you want to look for 👇",
-                            ["Oldest age", "Median age", "Youngest age"],
-                            key="visibility",
-                            disabled= st.session_state.disabled)
-    with col2:
-        rank = st.selectbox("Rank", ("Maximum", "Minimum"), key="rank",
-                            disabled= st.session_state.disabled)
-    with col3:
-        if overview:
-            st.write("Below is all seasons.")
-        else:
-            st.write("Below are all seasons with")
-            st.write("the {} value of the {} in each group.".format(rank.lower(), age_type.lower()))
-            st.write(":green[**Note: Outlier values are accepted.**]")
+    # Sidebar options
+    age_agg_method = st.selectbox("Aggregation Method", ["Max", "Median", "Min"])
+    
+    if age_agg_method == "Max" or age_agg_method == "Min":
+        season = st.selectbox("Select Season", ["Summer", "Winter"])
+        if age_agg_method == "Max":
+            title = f"Maximum Age Distribution in {season} Olympics"
+            data_plot = data_filtered[data_filtered['Season'] == season].groupby('Season')['Age'].max()
+        elif age_agg_method == "Min":
+            title = f"Minimum Age Distribution in {season} Olympics"
+            data_plot = data_filtered[data_filtered['Season'] == season].groupby('Season')['Age'].min()
+    elif age_agg_method == "Median":
+        title = "Median Age Distribution"
+        data_plot = data_filtered.groupby('Season')['Age'].median()
 
-    # Create a container for displaying the boxplots
-    with st.container():
-        
-        # define a function to find the season as requested
-        def find_season(data, age_type, rank):
-            if age_type == "Oldest age":
-                if rank == "Maximum":
-                    season = data.groupby('Season')['Age'].max().idxmax()
-                else:
-                    season = data.groupby('Season')['Age'].max().idxmin()
-            elif age_type == "Median age":
-                if rank == "Maximum":
-                    season = data.groupby('Season')['Age'].median().idxmax()
-                else:
-                    season = data.groupby('Season')['Age'].median().idxmin()
-            elif age_type == "Youngest age":
-                if rank == "Maximum":
-                    season = data.groupby('Season')['Age'].min().idxmax()
-                else:
-                    season = data.groupby('Season')['Age'].min().idxmin()
-            return season
-        
-        # Create two columns for displaying the boxplots
-        box1, box2 = st.columns(2)
-        with box1:
-            # Add label above the first boxplot
-            st.subheader("Summer Olympics")
-            
-            # Display the first boxplot
-            if overview:
-                fig1 = px.box(summer, y="Age", x="Season", color="Season", color_discrete_map=season_colors)
-                fig1.update_layout(showlegend=False)  # Remove legend from the first plot
-            else:
-                summer_season = find_season(summer, age_type, rank)
-                summer_display_season = summer[summer['Season'].isin([summer_season])]
-                fig1 = px.box(summer_display_season, y="Age", x="Season", color="Season", color_discrete_map=season_colors)
-                fig1.update_layout(showlegend=False)  # Remove legend from the first plot
+    # Plot the selected data
+    if age_agg_method != "Median":
+        st.write(title)
+        st.plotly_chart(px.box(data_plot, y="Age", points="all", title=title))
+    else:
+        st.write(title)
+        st.plotly_chart(px.box(data_plot.reset_index(), x='Season', y='Age', points="all", title=title))
 
-            st.plotly_chart(fig1, use_container_width=True)
-
-
-        with box2:
-            # Add label above the second boxplot
-            st.subheader("Winter Olympics")
-
-            # Display the second boxplot
-            if overview:
-                fig2 = px.box(winter, y="Age", x="Season", color="Season", color_discrete_map=season_colors)
-                fig2.update_layout(showlegend=False)  # Remove legend from the second plot
-            else:
-                winter_season = find_season(winter, age_type, rank)
-                winter_display_season = winter[winter['Season'].isin([winter_season])]
-                fig2 = px.box(winter_display_season, y="Age", x="Season", color="Season", color_discrete_map=season_colors)
-                fig2.update_layout(showlegend=False)  # Remove legend from the second plot
-
-            st.plotly_chart(fig2, use_container_width=True)
-
-### TAB 3: GEOGRAPHIC DISTRIBUTION
-with tab3:
-    # Calculate the count of athletes by birth country (NOC)
-    athlete_counts = data['NOC'].value_counts().reset_index()
-    athlete_counts.columns = ['NOC', 'Count']
+### TAB 2: BOXPLOT CHART
+with tab2:
+    # Filter data to remove rows with missing 'Age'
+    data_filtered = data.dropna(subset=['Age'])
 
     # Add the title of the plot
-    st.subheader("Geographic Distribution of Olympic Athletes' Birth Countries")
+    st.subheader("Age Distribution of Olympic Athletes")
 
-    # Create the map visualization
-    fig_map = px.scatter_geo(
-        athlete_counts,
-        locations="NOC",
-        color="Count",
-        hover_name="NOC",
-        size="Count",
-        projection="natural earth",
-        title="Olympic Athletes' Birth Countries",
-    )
+    # Display options for user selection
+    st.write("Choose the aggregation method and statistic you want to visualize:")
 
-    # Display the map
-    st.plotly_chart(fig_map, use_container_width=True)
+    # Sidebar options
+    age_agg_method = st.selectbox("Aggregation Method", ["Max", "Median", "Min"])
+    
+    if age_agg_method == "Max" or age_agg_method == "Min":
+        season = st.selectbox("Select Season", ["Summer", "Winter"])
+        if age_agg_method == "Max":
+            title = f"Maximum Age Distribution in {season} Olympics"
+            data_plot = data_filtered[data_filtered['Season'] == season].groupby('Season')['Age'].max()
+        elif age_agg_method == "Min":
+            title = f"Minimum Age Distribution in {season} Olympics"
+            data_plot = data_filtered[data_filtered['Season'] == season].groupby('Season')['Age'].min()
+    elif age_agg_method == "Median":
+        title = "Median Age Distribution"
+        data_plot = data_filtered.groupby('Season')['Age'].median()
+
+    # Plot the selected data
+    if age_agg_method != "Median":
+        st.write(title)
+        st.plotly_chart(px.box(data_plot, y="Age", points="all", title=title))
+    else:
+        st.write(title)
+        st.plotly_chart(px.box(data_plot.reset_index(), x='Season', y='Age', points="all", title=title))
+
+### TAB 3: GEOGRAPHIC DISTRIBUTION
+# Calculate the count of athletes by birth country
+athlete_counts = data['NOC'].value_counts().reset_index()
+athlete_counts.columns = ['NOC', 'Count']
+
+# Add the title of the plot
+tab3.subheader("Geographic Distribution of Olympic Athletes' Birth Countries")
+
+# Create the map visualization
+fig_map = px.scatter_geo(
+    athlete_counts,
+    locations="NOC",
+    color="Count",
+    hover_name="NOC",
+    size="Count",
+    projection="natural earth",
+    title="Olympic Athletes' Birth Countries",
+)
+
+# Display the map
+tab3.plotly_chart(fig_map, use_container_width=True)
 
 ### TAB 4: HEIGHT AND WEIGHT SCATTER PLOT
 with tab4:
