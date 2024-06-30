@@ -4,7 +4,8 @@ import altair as alt
 import plotly.express as px
 
 # Read the data from Excel
-data = pd.read_excel('D:\Athlete_events.xlsx')
+data = pd.read_excel('Athlete_events.xlsx')
+
 # Group members information
 members_info = [
     {"name": "Tran Thi Thuy Trang", "student_id": "10323060", "email": "10323060@student.vgu.edu.vn", "major": "Finance & Accounting (BFA)"},
@@ -12,50 +13,49 @@ members_info = [
     {"name": "Luong Nu Mai Nhung", "student_id": "10323056", "email": "10323056@student.vgu.edu.vn", "major": "Finance & Accounting (BFA)"},
     {"name": "Kim Duyen", "student_id": "10323044", "email": "10323044@student.vgu.edu.vn", "major": "Finance & Accounting (BFA)"}
 ]
+
 # Set the page configuration
 st.set_page_config(page_title="PYTHON 2 - BUSINESS IT 2", page_icon="🥰", layout="wide")
 
 # HEADER SECTION
-with st.container():
-    st.subheader("Hi everyone 😉 we're from group 7 class afternoon Business IT2")
-    st.title("What is there more to know about Olympic Athletes?")
-    st.write("Apart from their achievements, join us today on this app to get to know the athletes' Birth Countries and Average Age of Participation!") 
+st.subheader("Hi everyone :wave: we're from group 7 class afternoon Business IT2")
+st.title("What is there more to know about Olympic Athletes?")
+st.write("Apart from their achievements, join us today on this app to get to know the athletes' Birth Countries and Average Age of Participation!")
+
+# Display group members information
+st.subheader("Group Members:")
+for member in members_info:
+    st.write(f"- **{member['name']}**: Student ID {member['student_id']}, {member['major']}, Contact email: {member['email']}")
 
 # OUR DATASET
 url = "https://www.kaggle.com/datasets/heesoo37/120-years-of-olympic-history-athletes-and-results"
-with st.container():
-    st.write("---")
-    left_column, right_column = st.columns(2)
-    with left_column: st.header("Our dataset :sparkles:")
-    st.markdown(f"[Click here to see the original dataset]({url})")
-    st.write("##")
-    st.write(
-        """ Our refined data frame contains several main variables as follows:
-        \n - *Name*: Name of the athlete
-        \n - *Sport*: Sport they competed in
-        \n - *Event*: Specific event they participated in
-        \n - *Medal*: Type of medal they won (if any)
-        \n - *NOC*: National Olympic Committee (country) they represented
-        \n - *Age*: Age of the athlete at the time of the event """)
+st.write("---")
+st.header("Our dataset :sparkles:")
+st.markdown(f"[Click here to see the original dataset]({url})")
+st.write("""
+        Our refined data frame contains several main variables as follows:
+        - *Name*: Name of the athlete
+        - *Sport*: Sport they competed in
+        - *Event*: Specific event they participated in
+        - *Medal*: Type of medal they won (if any)
+        - *NOC*: National Olympic Committee (country) they represented
+        - *Age*: Age of the athlete at the time of the event
+        - *Height*: Height of the athlete
+        - *Weight*: Weight of the athlete
+        """)
 
 st.divider()
 st.header("Top Birth Countries, Age Distribution, and Geographic Distribution Chart")
 st.write("Discover these three graphs below with us")
 
 # Add Sidebar
-st.sidebar.write('**🎯 Reporting to Dr. Tan Duc Do**')
-st.sidebar.write('**☘️ Group 7 Business IT 2 Members:**')
-
-# Add content to the main area
-with st.sidebar:
-    st.write('Tran Thi Thuy Trang')
-    st.write('Tran Ngoc My Thao')
-    st.write('Luong Nu Mai Nhung')
-    st.write('Kim Duyen')
-
+st.sidebar.write('**:bulb: Reporting to Dr. Tan Duc Do**')
+st.sidebar.write('**:bulb: Members of Group 7 Business IT 2 :**')
+for member in members_info:
+    st.sidebar.write(member['name'])
 
 # Initial 3 tabs for each interactive graph
-tab1, tab2, tab3 = st.tabs(["Bar Chart", "Boxplot Chart", "Geographic Distribution"])
+tab1, tab2, tab3, tab4 = st.columns(4)
 
 ### TAB 1: BAR CHART
 
@@ -198,30 +198,28 @@ with tab2.container():
 
         st.plotly_chart(fig2, use_container_width=True)
 
-### TAB 3: GEOGRAPHIC DISTRIBUTION
+### TAB 3: BOXPLOT CHART
+with tab3:
+    st.subheader("Age Distribution in Summer and Winter Olympics")
+    data_clean = data.dropna(subset=['Age'])
+    fig3 = px.box(data_clean, x='Season', y='Age', color='Season', title='Age Distribution in Summer and Winter Olympics')
+    st.plotly_chart(fig3, use_container_width=True)
 
-
-
-# Calculate the count of athletes by birth country (using 'Team' as country names)
-athlete_counts = data['Team'].value_counts().reset_index()
-athlete_counts.columns = ['Team', 'Count']
-
-# Add the title of the plot
-tab3.subheader("Geographic Distribution of Olympic Athletes' Birth Countries")
-
-# Create the map visualization
-fig_map = px.scatter_geo(
-    athlete_counts,
-    locations="Team",  # Use 'Team' column for locations (birth countries)
-    color="Count",  # Color points by count of athletes
-    hover_name="Team",  # Hover information
-    size="Count",  # Size points by count of athletes
-    projection="natural earth",  # Map projection
-    title="Olympic Athletes' Birth Countries",  # Plot title
-)
-
-# Update layout for better readability
-fig_map.update_geos(showcoastlines=True, coastlinecolor="Black", showland=True, landcolor="LightGrey")
-
-# Display the map using Streamlit
-tab3.plotly_chart(fig_map, use_container_width=True)
+### TAB 4: GEOGRAPHIC DISTRIBUTION
+with tab4:
+    st.subheader("Geographic Distribution of Athletes' Birth Countries")
+    country_counts = data['NOC'].value_counts().reset_index(name='Count')
+    country_counts.columns = ['NOC', 'Count']
+    fig4 = px.scatter_geo(country_counts, locations="NOC", color="Count",
+                          hover_name="NOC", size="Count",
+                          projection="natural earth",
+                          title="Geographic Distribution of Athletes' Birth Countries")
+    st.plotly_chart(fig4, use_container_width=True)
+### TAB 5: PLOT BOX 
+st.header("Relationship between Height and Weight of Olympic Athletes")
+data_filtered = data.dropna(subset=['Height', 'Weight'])
+fig_scatter = px.scatter(data_filtered, x='Height', y='Weight', 
+                         title='Relationship between Height and Weight of Olympic Athletes',
+                         labels={'Height': 'Height (cm)', 'Weight': 'Weight (kg)'},
+                         hover_name='Name', hover_data=['Sport', 'NOC'])
+st.plotly_chart(fig_scatter, use_container_width=True)
