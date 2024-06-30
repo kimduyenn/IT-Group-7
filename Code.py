@@ -18,7 +18,7 @@ members_info = [
 st.set_page_config(page_title="PYTHON 2 - BUSINESS IT 2", page_icon="🥰", layout="wide")
 
 # HEADER SECTION
-st.subheader("Hi everyone :wave: we're from group 7 class afternoon Business IT2")
+st.subheader("Hi everyone ❤️ we're from group 7 class afternoon Business IT2")
 st.title("What is there more to know about Olympic Athletes?")
 st.write("Apart from their achievements, join us today on this app to get to know the athletes' Birth Countries and Average Age of Participation!")
 
@@ -45,12 +45,11 @@ st.write("""
         """)
 
 st.divider()
-st.header("Top Birth Countries, Age Distribution, and Geographic Distribution Chart")
-st.write("Discover these three graphs below with us")
+st.write("Discover these four graphs below with us")
 
 # Add Sidebar
-st.sidebar.write('**:bulb: Reporting to Dr. Tan Duc Do**')
-st.sidebar.write('**:bulb: Members of Group 7 Business IT 2 :**')
+st.sidebar.write('**🎯 Reporting to Dr. Tan Duc Do**')
+st.sidebar.write('**☘️ Members of Group 7 Business IT 2 :**')
 for member in members_info:
     st.sidebar.write(member['name'])
 
