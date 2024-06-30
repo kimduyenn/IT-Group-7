@@ -3,7 +3,7 @@ import pandas as pd
 import plotly.express as px
 
 # Load your main dataset
-data = pd.read_csv('Athlete_events.csv')
+data = pd.read_excel('Athlete_events.xlsx')
 
 # Streamlit tabs
 tab1, tab2, tab3, tab4 = st.tabs(["Bar Chart", "Box Plot", "Geographic Distribution", "Height and Weight Scatter Plot"])
