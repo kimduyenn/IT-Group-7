@@ -30,7 +30,7 @@ for member in members_info:
 # OUR DATASET
 url = "https://www.kaggle.com/datasets/heesoo37/120-years-of-olympic-history-athletes-and-results"
 st.write("---")
-st.header("Our dataset :sparkles:")
+st.header("Our dataset 🏆🏆🏆")
 st.markdown(f"[Click here to see the original dataset]({url})")
 st.write("""
         Our refined data frame contains several main variables as follows:
