@@ -59,8 +59,8 @@ tab1, tab2, tab3, tab4 = st.tabs(["Top Countries Bar Chart", "Age Distribution B
 
 ### TAB 1: BAR CHART
 with tab1:
-    # Calculate the value counts of Birth_Country
-    df = data['Team'].value_counts()
+    # Calculate the value counts of NOC (country)
+    df = data['NOC'].value_counts()
 
     # Set the initial value for the slider
     value = 5
@@ -197,26 +197,28 @@ with tab2:
             st.plotly_chart(fig2, use_container_width=True)
 
 ### TAB 3: GEOGRAPHIC DISTRIBUTION
-# Calculate the count of athletes by birth country
-athlete_counts = data['NOC'].value_counts().reset_index()
-athlete_counts.columns = ['NOC', 'Count']
+with tab3:
+    # Calculate the count of athletes by birth country (NOC)
+    athlete_counts = data['NOC'].value_counts().reset_index()
+    athlete_counts.columns = ['NOC', 'Count']
 
-# Add the title of the plot
-tab3.subheader("Geographic Distribution of Olympic Athletes' Birth Countries")
+    # Add the title of the plot
+    st.subheader("Geographic Distribution of Olympic Athletes' Birth Countries")
 
-# Create the map visualization
-fig_map = px.scatter_geo(
-    athlete_counts,
-    locations="NOC",
-    color="Count",
-    hover_name="NOC",
-    size="Count",
-    projection="natural earth",
-    title="Olympic Athletes' Birth Countries",
-)
+    # Create the map visualization
+    fig_map = px.scatter_geo(
+        athlete_counts,
+        locations="NOC",
+        color="Count",
+        hover_name="NOC",
+        size="Count",
+        projection="natural earth",
+        title="Olympic Athletes' Birth Countries",
+    )
 
-# Display the map
-tab3.plotly_chart(fig_map, use_container_width=True)
+    # Display the map
+    st.plotly_chart(fig_map, use_container_width=True)
+
 ### TAB 4: HEIGHT AND WEIGHT SCATTER PLOT
 with tab4:
     st.subheader("Height and Weight of Olympic Athletes")
