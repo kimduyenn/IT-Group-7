@@ -4,7 +4,7 @@ import altair as alt
 import plotly.express as px
 
 # Read the data from Excel
-data = pd.read_excel(r'Athlete_events.xlsx')
+data = pd.read_excel('Athlete_events.xlsx')
 
 # Group members information
 members_info = [
@@ -54,8 +54,8 @@ st.sidebar.write('**:bulb: Members of Group 7 Business IT 2 :**')
 for member in members_info:
     st.sidebar.write(member['name'])
 
-# Create tabs using st.columns()
-tabs = st.columns(4)
+# Create tabs for different visualizations
+tabs = st.tabs(["Top Countries Bar Chart", "Age Distribution Boxplot", "Geographic Distribution", "Height and Weight Scatter Plot"])
 
 ### TAB 1: BAR CHART
 with tabs[0]:
@@ -140,26 +140,22 @@ with tabs[2]:
 
 ### TAB 4: HEIGHT AND WEIGHT SCATTER PLOT
 with tabs[3]:
-    st.subheader("Height and Weight of Olympic Athletes")
-
     # Filter data to remove rows with missing 'Height' or 'Weight'
-    data_filtered_hw = data.dropna(subset=['Height', 'Weight'])
+    data_filtered = data.dropna(subset=['Height', 'Weight'])
 
     # Add a slider to filter data by year
     year_slider = st.slider("Year Range", int(data['Year'].min()), int(data['Year'].max()), (1950, 2020))
 
     # Filter data by selected year range
-    filtered_data_hw = data_filtered_hw[(data_filtered_hw['Year'] >= year_slider[0]) & (data_filtered_hw['Year'] <= year_slider[1])]
+    filtered_data = data_filtered[(data_filtered['Year'] >= year_slider[0]) & (data_filtered['Year'] <= year_slider[1])]
 
     # Create the scatter plot with Plotly
-    fig_hw = px.scatter(
-        filtered_data_hw, 
-        x="Height", 
-        y="Weight", 
-        color="Sex", 
-        hover_data=["Name", "Sport", "Year"],
-        title="Height and Weight of Olympic Athletes"
-    )
+    fig = px.scatter(filtered_data,
+                     x="Height",
+                     y="Weight",
+                     color="Sex",
+                     hover_data=["Name", "Sport", "Year"],
+                     title="Height and Weight of Olympic Athletes")
 
-    fig_hw.update_layout(title_x=0.5)
-    st.plotly_chart(fig_hw, use_container_width=True)
+    fig.update_layout(title_x=0.5)
+    st.plotly_chart(fig, use_container_width=True)
