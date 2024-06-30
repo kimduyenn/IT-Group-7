@@ -4,7 +4,7 @@ import altair as alt
 import plotly.express as px
 
 # Read the data from Excel
-data = pd.read_excel('Athlete_events.xlsx')
+data = pd.read_excel('D:\Athlete_events.xlsx')
 
 # Group members information
 members_info = [
